@@ -1,12 +1,23 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project>
+  <PropertyGroup>
+    <AssemblyName>CKAN</AssemblyName>
+    <BaseIntermediateOutputPath>..\_build\out\$(AssemblyName)\obj</BaseIntermediateOutputPath>
+  </PropertyGroup>
+  
+  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+    
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>CKAN</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
-    <!--<PackageReference Include="" Version=""/>-->
-  </ItemGroup>
-
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>..\_build\out\$(AssemblyName)\Debug\bin</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>..\_build\out\$(AssemblyName)\Release\bin</OutputPath>
+  </PropertyGroup>
+    
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.2" />
     <PackageReference Include="ICSharpCode.SharpZipLib.Patched" Version="0.86.5.1" />
@@ -18,4 +29,7 @@
     <PackageReference Include="Microsoft.Win32.Registry" Version="4.5.0" />
     <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
   </ItemGroup>
+    
+  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+    
 </Project>
