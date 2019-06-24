@@ -7,11 +7,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Diagnostics;
 using System.Security.Permissions;
-using ChinhDo.Transactions;
 using ICSharpCode.SharpZipLib.Zip;
 using log4net;
 using CKAN.Extensions;
 using CKAN.Versioning;
+using ChinhDo.Transactions.FileManager;
 
 namespace CKAN
 {
@@ -22,7 +22,7 @@ namespace CKAN
     /// </summary>
 
     // We require fancy permissions to use the FileSystemWatcher
-    [PermissionSet(SecurityAction.Demand, Name="FullTrust")]
+    [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
     public class NetFileCache : IDisposable
     {
         private FileSystemWatcher watcher;
@@ -592,7 +592,7 @@ namespace CKAN
         /// </returns>
         public static string CreateURLHash(Uri url)
         {
-            using (var sha1 = new SHA1Cng())
+            using (var sha1 = new SHA1CryptoServiceProvider())
             {
                 byte[] hash = sha1.ComputeHash(Encoding.UTF8.GetBytes(url.ToString()));
 
