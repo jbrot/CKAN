@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Transactions;
-#if NET20
+#if NETSTANDARD2_0
 using ChinhDo.Transactions.FileManager;
 #else
 using ChinhDo.Transactions;

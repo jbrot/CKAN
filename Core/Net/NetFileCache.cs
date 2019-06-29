@@ -10,7 +10,7 @@ using ICSharpCode.SharpZipLib.Zip;
 using log4net;
 using CKAN.Extensions;
 using CKAN.Versioning;
-#if NET20
+#if NETSTANDARD2_0
 using ChinhDo.Transactions.FileManager;
 #else
 using ChinhDo.Transactions;

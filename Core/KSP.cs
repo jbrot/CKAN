@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Transactions;
 using Autofac;
-#if NET20
+#if NETSTANDARD2_0
 using ChinhDo.Transactions.FileManager;
 #else
 using ChinhDo.Transactions;

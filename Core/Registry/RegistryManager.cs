@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
-#if NET20
+#if NETSTANDARD2_0
 using ChinhDo.Transactions.FileManager;
 #else
 using ChinhDo.Transactions;
