@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Transactions;
+#if NET20
+using ChinhDo.Transactions.FileManager;
+#else
 using ChinhDo.Transactions;
+#endif
 using CKAN.Versioning;
 using log4net;
 

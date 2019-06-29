@@ -5,7 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Autofac;
+#if NET20
+using ChinhDo.Transactions.FileManager;
+#else
 using ChinhDo.Transactions;
+#endif
 using CKAN.GameVersionProviders;
 using CKAN.Versioning;
 using ICSharpCode.SharpZipLib.GZip;

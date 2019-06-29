@@ -4,13 +4,16 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Transactions;
-using ChinhDo.Transactions;
 using CKAN.Extensions;
 using ICSharpCode.SharpZipLib.Core;
 using ICSharpCode.SharpZipLib.Zip;
 using log4net;
-using CKAN.Types;
 using CKAN.Versioning;
+#if NET20
+using ChinhDo.Transactions.FileManager;
+#else
+using ChinhDo.Transactions;
+#endif
 
 namespace CKAN
 {

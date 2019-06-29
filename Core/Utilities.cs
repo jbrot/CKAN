@@ -1,7 +1,11 @@
 using System;
 using System.IO;
 using System.Transactions;
+#if NET20
+using ChinhDo.Transactions.FileManager;
+#else
 using ChinhDo.Transactions;
+#endif
 
 namespace CKAN
 {

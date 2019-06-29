@@ -4,7 +4,11 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+#if NET20
+using ChinhDo.Transactions.FileManager;
+#else
 using ChinhDo.Transactions;
+#endif
 using CKAN.DLC;
 using CKAN.Versioning;
 using log4net;
