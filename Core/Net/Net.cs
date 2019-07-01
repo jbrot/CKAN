@@ -5,11 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
-#if NETSTANDARD2_0
 using ChinhDo.Transactions.FileManager;
-#else
-using ChinhDo.Transactions;
-#endif
 using CurlSharp;
 using log4net;
 

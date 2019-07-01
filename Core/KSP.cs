@@ -7,11 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Transactions;
 using Autofac;
-#if NETSTANDARD2_0
 using ChinhDo.Transactions.FileManager;
-#else
-using ChinhDo.Transactions;
-#endif
 using CKAN.GameVersionProviders;
 using CKAN.Versioning;
 using log4net;

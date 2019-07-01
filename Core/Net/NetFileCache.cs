@@ -10,11 +10,7 @@ using ICSharpCode.SharpZipLib.Zip;
 using log4net;
 using CKAN.Extensions;
 using CKAN.Versioning;
-#if NETSTANDARD2_0
 using ChinhDo.Transactions.FileManager;
-#else
-using ChinhDo.Transactions;
-#endif
 using System.Security.Cryptography;
 
 namespace CKAN
