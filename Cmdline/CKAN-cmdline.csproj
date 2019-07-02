@@ -92,7 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\CKAN-core.csproj">
-      <Project>{EBE1FF06-FAB5-4EFD-A65D-7085C5281919}</Project>
+      <Project>{3B9AEA22-FA3B-4E43-9283-EABDD81CF271}</Project>
       <Name>CKAN-core</Name>
     </ProjectReference>
     <ProjectReference Include="..\GUI\CKAN-GUI.csproj">

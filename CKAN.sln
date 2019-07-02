@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CKAN-netkan", "Netkan\CKAN-
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{4F41255E-8BC1-465B-82D5-1C5665BC099A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CKAN-core", "Core\CKAN-core.csproj", "{EBE1FF06-FAB5-4EFD-A65D-7085C5281919}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CKAN-core", "Core\CKAN-core.csproj", "{3B9AEA22-FA3B-4E43-9283-EABDD81CF271}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,10 +47,10 @@ Global
 		{DA5C7023-9A3B-4204-AE2F-BBA6C388B436}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA5C7023-9A3B-4204-AE2F-BBA6C388B436}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA5C7023-9A3B-4204-AE2F-BBA6C388B436}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EBE1FF06-FAB5-4EFD-A65D-7085C5281919}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EBE1FF06-FAB5-4EFD-A65D-7085C5281919}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EBE1FF06-FAB5-4EFD-A65D-7085C5281919}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EBE1FF06-FAB5-4EFD-A65D-7085C5281919}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B9AEA22-FA3B-4E43-9283-EABDD81CF271}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B9AEA22-FA3B-4E43-9283-EABDD81CF271}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B9AEA22-FA3B-4E43-9283-EABDD81CF271}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B9AEA22-FA3B-4E43-9283-EABDD81CF271}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
