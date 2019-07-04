@@ -7,11 +7,15 @@
   <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
     
   <PropertyGroup>
-    <TargetFramework>net45</TargetFramework>
+    <TargetFrameworks>net45;netcoreapp2.1</TargetFrameworks>
     <RootNamespace>Tests</RootNamespace>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <ProjectGuid>{4F41255E-8BC1-465B-82D5-1C5665BC099A}</ProjectGuid>
     <OutputPath>..\_build\out\$(AssemblyName)\$(Configuration)\bin</OutputPath>
+  </PropertyGroup>
+    
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.1' ">
+    <DefaultItemExcludes>$(DefaultItemExcludes);NetKAN\**;GUI\**</DefaultItemExcludes>
   </PropertyGroup>
 
   <ItemGroup>
@@ -35,7 +39,7 @@
     <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.2" />
   </ItemGroup>
     
-  <ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
     <Reference Include="CurlSharp">
       <HintPath>..\lib\curlsharp-v0.5.1-2-gd2d5699\CurlSharp.dll</HintPath>
     </Reference>
@@ -46,12 +50,24 @@
     <Reference Include="System.Transactions" />
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
+    
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.1' ">
+    <PackageReference Include="Shaman.CurlSharp" Version="0.6.3.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Core\CKAN-core.csproj" />
-    <ProjectReference Include="..\GUI\CKAN-GUI.csproj" />
-    <ProjectReference Include="..\Netkan\CKAN-netkan.csproj" />
   </ItemGroup>
+    
+  <Choose>
+    <When Condition=" '$(TargetFramework)' == 'net45' ">
+      <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
+        <ProjectReference Include="..\GUI\CKAN-GUI.csproj" />
+        <ProjectReference Include="..\Netkan\CKAN-netkan.csproj" />
+      </ItemGroup>
+    </When>
+  </Choose>
     
   <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
     
