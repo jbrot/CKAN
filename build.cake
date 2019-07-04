@@ -153,6 +153,7 @@ Task("Test-UnitTests+Only")
         .Combine("CKAN.Tests")
         .Combine(configuration)
         .Combine("bin")
+        .Combine("net45")
         .CombineWithFilePath("CKAN.Tests.dll");
 
     if (!FileExists(testFile))
