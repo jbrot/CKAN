@@ -5,9 +5,21 @@
   </PropertyGroup>
   
   <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+
+  <Choose>
+    <When Condition="$(Configuration.EndsWith('NetCore'))">
+      <PropertyGroup>
+        <TargetFrameworks>netcoreapp2.1</TargetFrameworks>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <TargetFrameworks>net45</TargetFrameworks>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
     
   <PropertyGroup>
-    <TargetFrameworks>net45;netcoreapp2.1</TargetFrameworks>
     <RootNamespace>Tests</RootNamespace>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <ProjectGuid>{4F41255E-8BC1-465B-82D5-1C5665BC099A}</ProjectGuid>
@@ -16,6 +28,15 @@
     
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.1' ">
     <DefaultItemExcludes>$(DefaultItemExcludes);NetKAN\**;GUI\**</DefaultItemExcludes>
+  </PropertyGroup>
+    
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug_NetCore' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release_NetCore' ">
+    <Optimize>true</Optimize>
   </PropertyGroup>
 
   <ItemGroup>

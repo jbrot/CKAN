@@ -6,14 +6,35 @@
   
   <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
     
+  <Choose>
+    <When Condition="$(Configuration.EndsWith('NetCore'))">
+      <PropertyGroup>
+        <TargetFrameworks>netstandard2.0</TargetFrameworks>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <TargetFrameworks>net45</TargetFrameworks>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
+
   <PropertyGroup>
-    <TargetFrameworks>net45;netstandard2.0</TargetFrameworks>
     <RootNamespace>CKAN</RootNamespace>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <ProjectGuid>{3B9AEA22-FA3B-4E43-9283-EABDD81CF271}</ProjectGuid>
     <OutputPath>..\_build\out\$(AssemblyName)\$(Configuration)\bin</OutputPath>
   </PropertyGroup>
-
+  
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug_NetCore' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release_NetCore' ">
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+  
   <ItemGroup>
     <Compile Include="..\_build\meta\GlobalAssemblyVersionInfo.cs">
       <Link>Properties\GlobalAssemblyVersionInfo.cs</Link>
