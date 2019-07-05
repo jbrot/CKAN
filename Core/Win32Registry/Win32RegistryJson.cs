@@ -76,11 +76,16 @@ namespace CKAN.Win32Registry
                         config.AuthTokens = new List<AuthToken>();
                     }
                 }
-                catch (FileNotFoundException)
+                catch (Exception ex) when (ex is FileNotFoundException || ex is DirectoryNotFoundException)
                 {
                     config = new ConfigFile();
                     config.KspInstances = new List<KspInstance>();
                     config.AuthTokens = new List<AuthToken>();
+
+                    // TODO Create migration.
+
+                    // Ensure directory exists
+                    new FileInfo(configFile).Directory.Create();
 
                     SaveConfig();
                 }
