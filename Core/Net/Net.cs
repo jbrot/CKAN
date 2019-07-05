@@ -5,7 +5,9 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
+using Autofac;
 using ChinhDo.Transactions.FileManager;
+using CKAN.Win32Registry;
 using CurlSharp;
 using log4net;
 
@@ -215,7 +217,7 @@ namespace CKAN
 
                 // Check whether to use an auth token for this host
                 if (!string.IsNullOrEmpty(authToken)
-                    || (Win32Registry.TryGetAuthToken(url.Host, out authToken)
+                    || (ServiceLocator.Container.Resolve<IWin32Registry>().TryGetAuthToken(url.Host, out authToken)
                         && !string.IsNullOrEmpty(authToken)))
                 {
                     log.InfoFormat("Using auth token for {0}", url.Host);
