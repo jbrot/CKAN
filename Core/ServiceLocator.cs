@@ -45,8 +45,7 @@ namespace CKAN
             // Also, we'll make this a SingleInstance, which will make life much simpler when dealing with the JSON registry.
             var platform = Environment.OSVersion.Platform;
             if (platform == PlatformID.MacOSX || platform == PlatformID.Unix || ((int)platform) == 128)
-                //builder.RegisterType<Win32RegistryJson>().As<IWin32Registry>().SingleInstance();
-                builder.RegisterType<Win32RegistryReal>().As<IWin32Registry>().SingleInstance();
+                builder.RegisterType<Win32RegistryJson>().As<IWin32Registry>().SingleInstance();
             else
                 builder.RegisterType<Win32RegistryReal>().As<IWin32Registry>().SingleInstance();
 
