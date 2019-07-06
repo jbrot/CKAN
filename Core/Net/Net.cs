@@ -108,6 +108,7 @@ namespace CKAN
                     using (FileStream stream = File.OpenWrite(filename))
                     using (var curl = Curl.CreateEasy(url, stream))
                     {
+                        curl.FollowLocation = true;
                         CurlCode result = curl.Perform();
                         if (result != CurlCode.Ok)
                         {
@@ -240,6 +241,7 @@ namespace CKAN
                         content += Encoding.UTF8.GetString(buf);
                         return size * nmemb;
                     });
+                    client.FollowLocation = true;
 
                     using (client)
                     {
