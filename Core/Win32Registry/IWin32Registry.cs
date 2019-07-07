@@ -5,26 +5,12 @@ namespace CKAN.Win32Registry
 {
     public interface IWin32Registry
     {
-        string AutoStartInstance { get; set; }
         void SetRegistryToInstances (SortedList<string, KSP> instances);
         IEnumerable<Tuple<string, string>> GetInstances ();
         string GetKSPBuilds ();
         void SetKSPBuilds (string buildMap);
 
-        /// <summary>
-        /// Get the hosts that have auth tokens stored in the registry
-        /// </summary>
-        /// <returns>
-        /// Strings that are values of the auth token registry key
-        /// </returns>
-        IEnumerable<string> GetAuthTokenHosts ();
-
-        /// <summary>
-        /// Set an auth token in the registry
-        /// </summary>
-        /// <param name="host">Host for which to set the token</param>
-        /// <param name="token">Token to set, or null to delete</param>
-        void SetAuthToken (string host, string token);
+        string AutoStartInstance { get; set; }
 
         /// <summary>
         /// Get and set the path to the download cache
@@ -44,6 +30,14 @@ namespace CKAN.Win32Registry
         int RefreshRate { get; set; }
 
         /// <summary>
+        /// Get the hosts that have auth tokens stored in the registry
+        /// </summary>
+        /// <returns>
+        /// Strings that are values of the auth token registry key
+        /// </returns>
+        IEnumerable<string> GetAuthTokenHosts();
+
+        /// <summary>
         /// Look for an auth token in the registry.
         /// </summary>
         /// <param name="host">Host for which to find a token</param>
@@ -51,6 +45,13 @@ namespace CKAN.Win32Registry
         /// <returns>
         /// True if found, false otherwise
         /// </returns>
-        bool TryGetAuthToken (string host, out string token);
+        bool TryGetAuthToken(string host, out string token);
+
+        /// <summary>
+        /// Set an auth token in the registry
+        /// </summary>
+        /// <param name="host">Host for which to set the token</param>
+        /// <param name="token">Token to set, or null to delete</param>
+        void SetAuthToken(string host, string token);
     }
 }

@@ -78,16 +78,20 @@ namespace CKAN.Win32Registry
                 }
                 catch (Exception ex) when (ex is FileNotFoundException || ex is DirectoryNotFoundException)
                 {
+                    // This runs if the configuration does not exist. We will create a new configuration and
+                    // try to migrate from the registry.
                     config = new ConfigFile();
                     config.KspInstances = new List<KspInstance>();
                     config.AuthTokens = new List<AuthToken>();
-
-                    // TODO Create migration.
 
                     // Ensure directory exists
                     new FileInfo(configFile).Directory.Create();
 
                     SaveConfig();
+
+#if !NETCOREAPP
+                    Migrate();
+#endif
                 }
             }
         }
@@ -287,6 +291,41 @@ namespace CKAN.Win32Registry
                 }
 
                 SaveConfig();
+            }
+        }
+
+        // <summary>
+        // Copy the configuration from the registry here.
+        // </summary>
+        private void Migrate()
+        {
+            Win32RegistryReal registryReal = new Win32RegistryReal();
+
+            var instances = registryReal.GetInstances();
+            lock (_lock)
+            {
+                config.KspInstances = instances.Select(instance => new KspInstance
+                {
+                    Name = instance.Item1,
+                    Path = instance.Item2
+                }).ToList();
+
+                SaveConfig();
+            }
+
+            SetKSPBuilds(registryReal.GetKSPBuilds());
+
+            AutoStartInstance = registryReal.AutoStartInstance;
+            DownloadCacheDir = registryReal.DownloadCacheDir;
+            CacheSizeLimit = registryReal.CacheSizeLimit;
+            RefreshRate = registryReal.RefreshRate;
+
+            foreach (string host in registryReal.GetAuthTokenHosts())
+            {
+                if (registryReal.TryGetAuthToken(host, out string token))
+                {
+                    SetAuthToken(host, token);
+                }
             }
         }
     }
