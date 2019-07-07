@@ -90,14 +90,14 @@ namespace CKAN
 
             log.DebugFormat("Downloading {0} to {1}", url, filename);
 
-            /*try
+            try
             {
                 var agent = MakeDefaultHttpClient();
                 agent.DownloadFile(url, filename);
                 etag = agent.ResponseHeaders.Get("ETag")?.Replace("\"", "");
             }
             catch (Exception ex)
-            {*/
+            {
                 log.InfoFormat("Download failed, trying with curlsharp...");
                 etag = null;
 
@@ -122,10 +122,10 @@ namespace CKAN
                     Curl.CleanUp();
                     return filename;
                 }
-                catch(Exception ex)
+                catch
                 {
                     // D'oh, failed again. Fall through to clean-up handling.
-                //}
+                }
 
                 // Clean up our file, it's unlikely to be complete.
                 // We do this even though we're using transactional files, as we may not be in a transaction.
