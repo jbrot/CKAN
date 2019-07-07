@@ -89,6 +89,7 @@ namespace CKAN
             }
 
             log.DebugFormat("Downloading {0} to {1}", url, filename);
+            Console.WriteLine("Downloading {0} to {1}", url, filename);
 
             try
             {
@@ -99,6 +100,7 @@ namespace CKAN
             catch (Exception ex)
             {
                 log.InfoFormat("Download failed, trying with curlsharp...");
+                Console.WriteLine("Download failed, trying with curlsharp...");
                 etag = null;
 
                 try
@@ -108,7 +110,6 @@ namespace CKAN
                     using (FileStream stream = File.OpenWrite(filename))
                     using (var curl = Curl.CreateEasy(url, stream))
                     {
-                        curl.FollowLocation = true;
                         CurlCode result = curl.Perform();
                         if (result != CurlCode.Ok)
                         {
@@ -117,14 +118,16 @@ namespace CKAN
                         else
                         {
                             log.Debug("curlsharp download successful");
+                            Console.WriteLine("curlsharp download successful");
                         }
                     }
 
                     Curl.CleanUp();
                     return filename;
                 }
-                catch
+                catch(Exception e)
                 {
+		    Console.WriteLine("Generic Exception Handler: {0}", e.ToString());
                     // D'oh, failed again. Fall through to clean-up handling.
                 }
 
@@ -241,7 +244,6 @@ namespace CKAN
                         content += Encoding.UTF8.GetString(buf);
                         return size * nmemb;
                     });
-                    client.FollowLocation = true;
 
                     using (client)
                     {
