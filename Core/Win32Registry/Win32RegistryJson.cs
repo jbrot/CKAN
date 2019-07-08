@@ -89,7 +89,7 @@ namespace CKAN.Win32Registry
 
                     SaveConfig();
 
-#if !NETCOREAPP
+#if !NETSTANDARD
                     Migrate();
 #endif
                 }

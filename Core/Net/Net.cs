@@ -114,7 +114,6 @@ namespace CKAN
             }
             catch (Exception ex)
             {
-                throw;
                 log.InfoFormat("Download failed, trying with curlsharp...");
                 etag = null;
 
