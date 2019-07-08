@@ -36,6 +36,9 @@ namespace CKAN.Win32Registry
 
         #endregion
 
+        // The standard location of the config file. Where this actually points is platform dependent,
+        // but it's the same place as the downloads folder. The location can be overwritten with the
+        // CKAN_CONFIG_FILE environment variable.
         private static readonly string defaultConfigFile =
             Environment.GetEnvironmentVariable("CKAN_CONFIG_FILE")
             ?? Path.Combine(
@@ -50,6 +53,21 @@ namespace CKAN.Win32Registry
             "downloads"
         );
 
+        // The actual config file state, and it's location on the disk (we allow
+        // the location to be changed for unit tests). Note that these are static
+        // because we only want to have one copy of the config file in memory. This
+        // version is considered authoritative, and we save it to the disk every time
+        // it gets changed.
+        //
+        // If you have multiple instances of CKAN running at the same time, each will
+        // believe that their copy of the config file in memory is authoritative, so
+        // changes made by one copy will not be respected by the other.
+        //
+        // Since we only have one copy in memory, we need to use _lock in order to
+        // keep things consistent. Depending on performance needs, it may make sense
+        // to switch to a read/write lock---but only do that after profiling. It is
+        // almost certainly more effort than it's worth, and may not actually provide
+        // any performance gains.
         private static readonly object _lock = new object();
 		private static string configFile = defaultConfigFile;
         private static ConfigFile config = null;
@@ -63,6 +81,11 @@ namespace CKAN.Win32Registry
             File.WriteAllText(configFile, json);
         }
 
+        // <summary>
+        // Create a new instance of Win32RegistryJson. ServiceLocator maintains a
+        // singleton instance, so in general you should use that. However, the
+        // core state is static, so creating multiple instances is not an issue.
+        // </summary>
         public Win32RegistryJson ()
         {
             lock(_lock)
@@ -75,9 +98,15 @@ namespace CKAN.Win32Registry
         }
 
         // <summary>
-        // For testing purposes only. Discards the current configuration state
-        // and loads a new one from the specified file.
+        // For testing purposes only. This constructor discards the global configuration
+        // state, and recreates it from the specified file.
         // </summary>
+        //
+        // N.B., if you're adding the ability to specify a config file from the CLI, this
+        // might be the way to do it. However, you need to ensure that the configuration
+        // doesn't get loaded from the default location, first, as that might end up
+        // creating files and directories that the user is trying to avoid creating by
+        // specifying the configuration file on the command line.
         public Win32RegistryJson(string newConfig)
 		{
             lock(_lock)
@@ -289,6 +318,9 @@ namespace CKAN.Win32Registry
         // <summary>
         // Load the JSON configuration file. This will replace the current state.
         // Only call this while you own _lock.
+        //
+        // If the configuration file does not exist, this will create it and then
+        // try to populate it with values in the registry left from the old system. 
         // </summary>
         private void LoadConfig()
         {
