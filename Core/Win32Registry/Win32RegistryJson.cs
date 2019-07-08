@@ -125,7 +125,14 @@ namespace CKAN.Win32Registry
             {
                 lock (_lock)
                 {
-                    config.CacheSizeLimit = value;
+                    if (value < 0)
+                    {
+                        config.CacheSizeLimit = null;
+                    }
+                    else
+                    {
+                        config.CacheSizeLimit = value;
+                    }
 
                     SaveConfig();
                 }
@@ -336,11 +343,18 @@ namespace CKAN.Win32Registry
             {
                 string json = File.ReadAllText(configFile);
                 config = JsonConvert.DeserializeObject<Config>(json);
+
+                if (config == null)
+                {
+                    config = new Config();
+                }
+
                 if (config.KspInstances == null)
                 {
                     config.KspInstances = new List<KspInstance>();
 
                 }
+
                 if (config.AuthTokens == null)
                 {
                     config.AuthTokens = new List<AuthToken>();
