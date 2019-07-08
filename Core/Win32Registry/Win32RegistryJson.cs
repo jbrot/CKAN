@@ -8,6 +8,9 @@ namespace CKAN.Win32Registry
 {
     public class Win32RegistryJson : IWin32Registry
     {
+
+        #region JSON Structures
+
         private class ConfigFile
         {
             public string AutoStartInstance { get; set; }
@@ -31,7 +34,9 @@ namespace CKAN.Win32Registry
             public string Token { get; set; }
         }
 
-        private static readonly string configFile =
+        #endregion
+
+        private static readonly string defaultConfigFile =
             Environment.GetEnvironmentVariable("CKAN_CONFIG_FILE")
             ?? Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
@@ -46,10 +51,12 @@ namespace CKAN.Win32Registry
         );
 
         private static readonly object _lock = new object();
+		private static string configFile = defaultConfigFile;
         private static ConfigFile config = null;
 
-        // Save the JSON configuration file. Only call this while you
-        // own _lock.
+        // <summary>
+        // Save the JSON configuration file. Only call this while you own _lock.
+        // </summary>
         private static void SaveConfig()
         {
             string json = JsonConvert.SerializeObject(config, Formatting.Indented);
@@ -62,39 +69,24 @@ namespace CKAN.Win32Registry
             {
                 if (config != null)
                     return;
-                try
-                {
-                    string json = File.ReadAllText(configFile);
-                    config = JsonConvert.DeserializeObject<ConfigFile>(json);
-                    if (config.KspInstances == null)
-                    {
-                        config.KspInstances = new List<KspInstance>();
 
-                    }
-                    if (config.AuthTokens == null)
-                    {
-                        config.AuthTokens = new List<AuthToken>();
-                    }
-                }
-                catch (Exception ex) when (ex is FileNotFoundException || ex is DirectoryNotFoundException)
-                {
-                    // This runs if the configuration does not exist. We will create a new configuration and
-                    // try to migrate from the registry.
-                    config = new ConfigFile();
-                    config.KspInstances = new List<KspInstance>();
-                    config.AuthTokens = new List<AuthToken>();
-
-                    // Ensure directory exists
-                    new FileInfo(configFile).Directory.Create();
-
-                    SaveConfig();
-
-#if !NETSTANDARD
-                    Migrate();
-#endif
-                }
+				LoadConfig();
             }
         }
+
+        // <summary>
+        // For testing purposes only. Discards the current configuration state
+        // and loads a new one from the specified file.
+        // </summary>
+        public Win32RegistryJson(string newConfig)
+		{
+            lock(_lock)
+			{
+				configFile = newConfig;
+
+				LoadConfig();
+			}
+		}
 
         public string DownloadCacheDir
         {
@@ -291,6 +283,47 @@ namespace CKAN.Win32Registry
                 }
 
                 SaveConfig();
+            }
+        }
+
+        // <summary>
+        // Load the JSON configuration file. This will replace the current state.
+        // Only call this while you own _lock.
+        // </summary>
+        private void LoadConfig()
+        {
+            try
+            {
+                string json = File.ReadAllText(configFile);
+                config = JsonConvert.DeserializeObject<ConfigFile>(json);
+                if (config.KspInstances == null)
+                {
+                    config.KspInstances = new List<KspInstance>();
+
+                }
+                if (config.AuthTokens == null)
+                {
+                    config.AuthTokens = new List<AuthToken>();
+                }
+            }
+            catch (Exception ex) when (ex is FileNotFoundException || ex is DirectoryNotFoundException)
+            {
+                // This runs if the configuration does not exist. We will create a new configuration and
+                // try to migrate from the registry.
+                config = new ConfigFile();
+                config.KspInstances = new List<KspInstance>();
+                config.AuthTokens = new List<AuthToken>();
+
+                // Ensure the directory exists
+                new FileInfo(configFile).Directory.Create();
+
+                // Write the configuration to the disk
+                SaveConfig();
+
+#if !NETSTANDARD
+                // If we are not running on .NET Standard, try to migrate from the real registry
+                Migrate();
+#endif
             }
         }
 
