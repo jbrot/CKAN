@@ -11,7 +11,7 @@ namespace CKAN.Win32Registry
 
         #region JSON Structures
 
-        private class ConfigFile
+        private class Config
         {
             public string AutoStartInstance { get; set; }
             public string DownloadCacheDir { get; set; }
@@ -39,7 +39,7 @@ namespace CKAN.Win32Registry
         // The standard location of the config file. Where this actually points is platform dependent,
         // but it's the same place as the downloads folder. The location can be overwritten with the
         // CKAN_CONFIG_FILE environment variable.
-        private static readonly string defaultConfigFile =
+        public static readonly string defaultConfigFile =
             Environment.GetEnvironmentVariable("CKAN_CONFIG_FILE")
             ?? Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
@@ -47,7 +47,7 @@ namespace CKAN.Win32Registry
                 "config.json"
             );
 
-        private static readonly string defaultDownloadCacheDir = Path.Combine(
+        public static readonly string DefaultDownloadCacheDir = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
             "CKAN",
             "downloads"
@@ -70,52 +70,15 @@ namespace CKAN.Win32Registry
         // any performance gains.
         private static readonly object _lock = new object();
 		private static string configFile = defaultConfigFile;
-        private static ConfigFile config = null;
+        private static Config config = null;
 
         // <summary>
-        // Save the JSON configuration file. Only call this while you own _lock.
+        // Where the config file is located.
         // </summary>
-        private static void SaveConfig()
+        public string ConfigFile
         {
-            string json = JsonConvert.SerializeObject(config, Formatting.Indented);
-            File.WriteAllText(configFile, json);
+            get => configFile;
         }
-
-        // <summary>
-        // Create a new instance of Win32RegistryJson. ServiceLocator maintains a
-        // singleton instance, so in general you should use that. However, the
-        // core state is static, so creating multiple instances is not an issue.
-        // </summary>
-        public Win32RegistryJson ()
-        {
-            lock(_lock)
-            {
-                if (config != null)
-                    return;
-
-				LoadConfig();
-            }
-        }
-
-        // <summary>
-        // For testing purposes only. This constructor discards the global configuration
-        // state, and recreates it from the specified file.
-        // </summary>
-        //
-        // N.B., if you're adding the ability to specify a config file from the CLI, this
-        // might be the way to do it. However, you need to ensure that the configuration
-        // doesn't get loaded from the default location, first, as that might end up
-        // creating files and directories that the user is trying to avoid creating by
-        // specifying the configuration file on the command line.
-        public Win32RegistryJson(string newConfig)
-		{
-            lock(_lock)
-			{
-				configFile = newConfig;
-
-				LoadConfig();
-			}
-		}
 
         public string DownloadCacheDir
         {
@@ -123,7 +86,7 @@ namespace CKAN.Win32Registry
             {
                 lock (_lock)
                 {
-                    return config.DownloadCacheDir ?? defaultDownloadCacheDir;
+                    return config.DownloadCacheDir ?? DefaultDownloadCacheDir;
                 }
             }
             set
@@ -216,6 +179,42 @@ namespace CKAN.Win32Registry
 
                     SaveConfig();
                 }
+            }
+        }
+
+        // <summary>
+        // Create a new instance of Win32RegistryJson. ServiceLocator maintains a
+        // singleton instance, so in general you should use that. However, the
+        // core state is static, so creating multiple instances is not an issue.
+        // </summary>
+        public Win32RegistryJson()
+        {
+            lock (_lock)
+            {
+                if (config != null)
+                    return;
+
+                LoadConfig();
+            }
+        }
+
+        // <summary>
+        // For testing purposes only. This constructor discards the global configuration
+        // state, and recreates it from the specified file.
+        // </summary>
+        //
+        // N.B., if you're adding the ability to specify a config file from the CLI, this
+        // might be the way to do it. However, you need to ensure that the configuration
+        // doesn't get loaded from the default location, first, as that might end up
+        // creating files and directories that the user is trying to avoid creating by
+        // specifying the configuration file on the command line.
+        public Win32RegistryJson(string newConfig)
+        {
+            lock (_lock)
+            {
+                configFile = newConfig;
+
+                LoadConfig();
             }
         }
 
@@ -316,6 +315,15 @@ namespace CKAN.Win32Registry
         }
 
         // <summary>
+        // Save the JSON configuration file. Only call this while you own _lock.
+        // </summary>
+        private static void SaveConfig()
+        {
+            string json = JsonConvert.SerializeObject(config, Formatting.Indented);
+            File.WriteAllText(configFile, json);
+        }
+
+        // <summary>
         // Load the JSON configuration file. This will replace the current state.
         // Only call this while you own _lock.
         //
@@ -327,7 +335,7 @@ namespace CKAN.Win32Registry
             try
             {
                 string json = File.ReadAllText(configFile);
-                config = JsonConvert.DeserializeObject<ConfigFile>(json);
+                config = JsonConvert.DeserializeObject<Config>(json);
                 if (config.KspInstances == null)
                 {
                     config.KspInstances = new List<KspInstance>();
@@ -342,7 +350,7 @@ namespace CKAN.Win32Registry
             {
                 // This runs if the configuration does not exist. We will create a new configuration and
                 // try to migrate from the registry.
-                config = new ConfigFile();
+                config = new Config();
                 config.KspInstances = new List<KspInstance>();
                 config.AuthTokens = new List<AuthToken>();
 
