@@ -96,8 +96,25 @@ namespace CKAN
                 agent.DownloadFile(url, filename);
                 etag = agent.ResponseHeaders.Get("ETag")?.Replace("\"", "");
             }
+            // Explicit redirect handling. This is needed when redirecting from HTTPS to HTTP on .NET Core.
+            catch (WebException ex)
+            {
+                if (ex.Status != WebExceptionStatus.ProtocolError)
+                {
+                    throw;
+                }
+
+                HttpWebResponse response = ex.Response as HttpWebResponse;
+                if (response.StatusCode != HttpStatusCode.Redirect)
+                {
+                    throw;
+                }
+
+                return Net.Download(response.GetResponseHeader("Location"), out etag, filename, user);
+            }
             catch (Exception ex)
             {
+                throw;
                 log.InfoFormat("Download failed, trying with curlsharp...");
                 etag = null;
 
