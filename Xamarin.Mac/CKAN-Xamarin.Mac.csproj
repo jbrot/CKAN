@@ -91,8 +91,8 @@
     <Compile Include="AppDelegate.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CKAN-Xamarin\CKAN-Xamarin.csproj">
-      <Project>{D6D0514E-8AB0-4A0F-B74C-91739794DB2E}</Project>
+    <ProjectReference Include="..\Xamarin\CKAN-Xamarin.csproj">
+      <Project>{4FBDA31F-F169-477C-A375-B707542FF9C6}</Project>
       <Name>CKAN-Xamarin</Name>
     </ProjectReference>
   </ItemGroup>
