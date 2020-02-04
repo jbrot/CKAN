@@ -93,10 +93,15 @@ namespace CKAN
             if (!IsMono)
                 return false;
 
+            // Something weird happens on Xamarin.Mac, but this function is only relevant
+            // for the GUI, so just mark this as true. In practice, we shouldn't run into
+            // such old versions of Mono any more.
+            if (IsMac)
+                return true;
+
             // Get Mono's display name and parse the version
             Type type = Type.GetType("Mono.Runtime");
-            string display_name =
-                (string) type.GetMethod("GetDisplayName", BindingFlags.NonPublic | BindingFlags.Static).Invoke(null, null);
+            string display_name = (string) type.GetMethod("GetDisplayName", BindingFlags.NonPublic | BindingFlags.Static).Invoke(null, null);
 
             var match = versionMatcher.Match(display_name);
             if (match.Success)

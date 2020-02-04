@@ -6,9 +6,13 @@ namespace CKAN.Xamarin
 {
     public partial class App : Application
     {
-        public App ()
+        public KSPManager Manager;
+
+        public App (KSPManager mgr)
         {
             InitializeComponent();
+
+            Manager = mgr ?? new KSPManager(new NullUser());
 
             MainPage = new MainPage();
         }

@@ -57,6 +57,8 @@ namespace CKAN
                 throw new DirectoryNotFoundKraken(cachePath, $"Cannot find cache directory: {cachePath}");
             }
 
+            // TODO: Find a solution for this on Xamarin.
+#if !NETSTANDARD
             // Establish a watch on our cache. This means we can cache the directory contents,
             // and discard that cache if we spot changes.
             watcher = new FileSystemWatcher(cachePath, "*.zip")
@@ -76,6 +78,7 @@ namespace CKAN
 
             // Enable events!
             watcher.EnableRaisingEvents = true;
+#endif
         }
 
         /// <summary>

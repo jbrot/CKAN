@@ -24,7 +24,7 @@ namespace CKAN.Xamarin.Mac
         public override void DidFinishLaunching(NSNotification notification)
         {
             Forms.Init();
-            LoadApplication(new App());
+            LoadApplication(new App(null));
             base.DidFinishLaunching(notification);
         }
 

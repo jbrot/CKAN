@@ -6,6 +6,8 @@ namespace CKAN.Xamarin.Mac
     {
         static void Main (string [] args)
         {
+            Logging.Initialize();
+
             NSApplication.Init();
             NSApplication.SharedApplication.Delegate = new AppDelegate();
             NSApplication.Main(args);
