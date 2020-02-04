@@ -14,7 +14,7 @@ namespace CKAN.Xamarin
 
             Manager = mgr ?? new KSPManager(new NullUser());
 
-            MainPage = new MainPage();
+            MainPage = new View.MainPage();
         }
 
         protected override void OnStart ()

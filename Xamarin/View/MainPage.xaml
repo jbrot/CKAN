@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                  xmlns:local="clr-namespace:CKAN.Xamarin.View;assembly=CKAN-Xamarin"
+                  x:Class="CKAN.Xamarin.View.MainPage">
+    <MasterDetailPage.Master>
+        <local:MasterPage x:Name="masterPage" />
+    </MasterDetailPage.Master>
+    <MasterDetailPage.Detail>
+        <ContentPage>
+            <Label Text="Hello, world!" />
+        </ContentPage>
+    </MasterDetailPage.Detail>
+</MasterDetailPage>
