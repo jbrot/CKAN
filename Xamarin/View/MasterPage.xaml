@@ -3,12 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CKAN.Xamarin.View.MasterPage"
              Title="CKAN"
-             BackgroundColor="Red">
+             BackgroundColor="#b44"
+             Padding="20" >
     <StackLayout>
-        <Label Text="Line 1" />
-        <Label Text="Line 2" />
-        <Label Text="Line 3" />
-        <Label Text="Line 4" />
-        <Label Text="Line 5" />
+        <Image Source="Logo" />
+        <Label Text="Search" />
+        <Label Text="Browse" />
+        <Label Text="Installed" />
+        <Label Text="Updates" />
+        <Label Text="Settings" />
     </StackLayout>
 </ContentPage>
