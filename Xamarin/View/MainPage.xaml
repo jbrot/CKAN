@@ -1,14 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
                   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                  xmlns:local="clr-namespace:CKAN.Xamarin.View;assembly=CKAN-Xamarin"
-                  x:Class="CKAN.Xamarin.View.MainPage">
+                  xmlns:model="clr-namespace:CKAN.Xamarin.ViewModel;assembly=CKAN-Xamarin"
+                  xmlns:local="clr-namespace:CKAN.Xamarin.View"
+                  x:Class="CKAN.Xamarin.View.MainPage"
+                  BindableDetail="{Binding DetailViewModel, Converter={StaticResource viewModelToView}}">
+    <MasterDetailPage.BindingContext>
+        <model:MainPageViewModel />
+    </MasterDetailPage.BindingContext>
     <MasterDetailPage.Master>
-        <local:MasterPage x:Name="masterPage" />
-    </MasterDetailPage.Master>
-    <MasterDetailPage.Detail>
-        <ContentPage>
-            <Label Text="Hello, world!" />
+        <ContentPage Title="CKAN"
+                     BackgroundColor="#b44" >
+            <StackLayout>
+                <Image Source="Logo" Margin="20" />
+                <local:CommandListView ItemsSource="{Binding Items}"
+                                       ItemSelectedCommand="{Binding NavigationSelectedCommand}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid Padding="5,10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="30"/>
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Image Source="{Binding Icon}" />
+                                    <Label Grid.Column="1" Text="{Binding Label}" />
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </local:CommandListView>
+            </StackLayout>
         </ContentPage>
-    </MasterDetailPage.Detail>
+    </MasterDetailPage.Master>
 </MasterDetailPage>
