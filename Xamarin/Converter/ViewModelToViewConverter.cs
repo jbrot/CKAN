@@ -4,6 +4,7 @@ using System.Globalization;
 using CKAN.Xamarin.View;
 using CKAN.Xamarin.ViewModel;
 using Xamarin.Forms;
+using XView = Xamarin.Forms.View;
 
 namespace CKAN.Xamarin.Converter
 {
@@ -12,7 +13,7 @@ namespace CKAN.Xamarin.Converter
     /// </summary>
     public class ViewModelToViewConverter : IValueConverter
     {
-        private IDictionary<Type, Page> map = new Dictionary<Type, Page>(0);
+        private IDictionary<Type, XView> map = new Dictionary<Type, XView>();
 
         public object Convert (object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -22,35 +23,35 @@ namespace CKAN.Xamarin.Converter
             }
 
             // If we've already instantiated the corresponding view, return it.
-            Page page;
-            map.TryGetValue(key, out page);
-            if (page != null)
-                return page;
+            XView view;
+            map.TryGetValue(key, out view);
+            if (view != null)
+                return view;
 
             // Otherwise, we need to create it.
             switch(value) {
-            case BrowsePageViewModel _:
-                page = new BrowsePage();
+            case BrowseViewModel _:
+                view = new BrowseView();
                 break;
-            case InstalledPageViewModel _:
-                page = new InstalledPage();
+            case InstalledViewModel _:
+                view = new InstalledView();
                 break;
-            case SearchPageViewModel _:
-                page = new SearchPage();
+            case SearchViewModel _:
+                view = new SearchView();
                 break;
-            case SettingsPageViewModel _:
-                page = new SettingsPage();
+            case SettingsViewModel _:
+                view = new SettingsView();
                 break;
-            case UpdatesPageViewModel _:
-                page = new UpdatesPage();
+            case UpdatesViewModel _:
+                view = new UpdatesView();
                 break;
             default:
                 throw new ArgumentException($"Unsupported view model type {key.ToString()}!");
             }
 
-            page.BindingContext = value;
-            map.Add(key, page);
-            return page;
+            view.BindingContext = value;
+            map.Add(key, view);
+            return view;
         }
 
         public object ConvertBack (object value, Type targetType, object parameter, CultureInfo culture)

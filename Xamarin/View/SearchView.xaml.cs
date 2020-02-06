@@ -5,9 +5,9 @@ using Xamarin.Forms;
 
 namespace CKAN.Xamarin.View
 {
-    public partial class SearchPage : ContentPage
+    public partial class SearchView : ContentView
     {
-        public SearchPage ()
+        public SearchView ()
         {
             InitializeComponent();
         }

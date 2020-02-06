@@ -3,11 +3,13 @@
                   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                   xmlns:model="clr-namespace:CKAN.Xamarin.ViewModel;assembly=CKAN-Xamarin"
                   xmlns:local="clr-namespace:CKAN.Xamarin.View"
-                  x:Class="CKAN.Xamarin.View.MainPage"
-                  BindableDetail="{Binding DetailViewModel, Converter={StaticResource viewModelToView}}">
+                  x:Class="CKAN.Xamarin.View.MainPage">
     <MasterDetailPage.BindingContext>
         <model:MainPageViewModel />
     </MasterDetailPage.BindingContext>
+    <MasterDetailPage.Detail>
+        <local:BindableContentPage Content="{Binding DetailViewModel, Converter={StaticResource viewModelToView}}" />
+    </MasterDetailPage.Detail>
     <MasterDetailPage.Master>
         <ContentPage Title="CKAN"
                      BackgroundColor="#b44" >

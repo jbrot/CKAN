@@ -5,9 +5,9 @@ using Xamarin.Forms;
 
 namespace CKAN.Xamarin.View
 {
-    public partial class InstalledPage : ContentPage
+    public partial class UpdatesView : ContentView
     {
-        public InstalledPage ()
+        public UpdatesView ()
         {
             InitializeComponent();
         }

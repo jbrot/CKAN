@@ -5,9 +5,9 @@ using Xamarin.Forms;
 
 namespace CKAN.Xamarin.View
 {
-    public partial class BrowsePage : ContentPage
+    public partial class SettingsView : ContentView
     {
-        public BrowsePage ()
+        public SettingsView ()
         {
             InitializeComponent();
         }

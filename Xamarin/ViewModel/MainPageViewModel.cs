@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Input;
+using CKAN.Xamarin.Converter;
 using CKAN.Xamarin.Model;
 using Xamarin.Forms;
 
@@ -13,6 +14,8 @@ namespace CKAN.Xamarin.ViewModel
             get { return items; }
             set { SetProperty(ref items, value); }
         }
+
+        private ViewModelToViewConverter converter = new ViewModelToViewConverter();
 
         private BaseViewModel detailViewModel;
         /// <summary>
@@ -39,27 +42,27 @@ namespace CKAN.Xamarin.ViewModel
                 new NavigationItem {
                     Label = "Search",
                     Icon = ImageSource.FromFile("Logo"),
-                    ContentType = typeof(SearchPageViewModel)
+                    ContentType = typeof(SearchViewModel)
                 },
                 new NavigationItem {
                     Label = "Browse",
                     Icon = ImageSource.FromFile("Logo"),
-                    ContentType = typeof(BrowsePageViewModel)
+                    ContentType = typeof(BrowseViewModel)
                 },
                 new NavigationItem {
                     Label = "Installed",
                     Icon = ImageSource.FromFile("Logo"),
-                    ContentType = typeof(InstalledPageViewModel)
+                    ContentType = typeof(InstalledViewModel)
                 },
                 new NavigationItem {
                     Label = "Updates",
                     Icon = ImageSource.FromFile("Logo"),
-                    ContentType = typeof(UpdatesPageViewModel)
+                    ContentType = typeof(UpdatesViewModel)
                 },
                 new NavigationItem {
                     Label = "Settings",
                     Icon = ImageSource.FromFile("Logo"),
-                    ContentType = typeof(SettingsPageViewModel)
+                    ContentType = typeof(SettingsViewModel)
                 },
                 new NavigationItem {
                     Label = "Run",
@@ -68,7 +71,7 @@ namespace CKAN.Xamarin.ViewModel
                 }
             };
 
-            DetailViewModel = new SettingsPageViewModel();
+            DetailViewModel = new SearchViewModel();
 
             NavigationSelectedCommand = new Command<NavigationItem>(OnNavigationSelected);
         }
@@ -83,7 +86,7 @@ namespace CKAN.Xamarin.ViewModel
             BaseViewModel vm;
             instantiatedViewModels.TryGetValue(key, out vm);
             if (vm == null) {
-                vm = (BaseViewModel) Activator.CreateInstance(key);
+                vm = (BaseViewModel)Activator.CreateInstance(key);
                 instantiatedViewModels.Add(key, vm);
             }
 
