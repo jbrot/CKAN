@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Input;
+using Autofac;
 using CKAN.Xamarin.Converter;
 using CKAN.Xamarin.Model;
 using Xamarin.Forms;
@@ -14,8 +15,6 @@ namespace CKAN.Xamarin.ViewModel
             get { return items; }
             set { SetProperty(ref items, value); }
         }
-
-        private ViewModelToViewConverter converter = new ViewModelToViewConverter();
 
         private BaseViewModel detailViewModel;
         /// <summary>
@@ -33,9 +32,8 @@ namespace CKAN.Xamarin.ViewModel
 
         public ICommand NavigationSelectedCommand { get; private set; }
 
-        private IDictionary<Type, BaseViewModel> instantiatedViewModels = new Dictionary<Type, BaseViewModel>();
-
-        public MainPageViewModel ()
+        public MainPageViewModel (ILifetimeScope scope)
+            : base(scope)
         {
             // TODO: Put in proper icons
             Items = new List<NavigationItem> {
@@ -71,26 +69,19 @@ namespace CKAN.Xamarin.ViewModel
                 }
             };
 
-            DetailViewModel = new SearchViewModel();
+            DetailViewModel = Scope.Resolve<SettingsViewModel>();
 
             NavigationSelectedCommand = new Command<NavigationItem>(OnNavigationSelected);
         }
 
         private void OnNavigationSelected (NavigationItem item)
         {
-            Type key = item?.ContentType;
-            if (key == null) {
+            Type type = item?.ContentType;
+            if (type == null) {
                 return;
             }
 
-            BaseViewModel vm;
-            instantiatedViewModels.TryGetValue(key, out vm);
-            if (vm == null) {
-                vm = (BaseViewModel)Activator.CreateInstance(key);
-                instantiatedViewModels.Add(key, vm);
-            }
-
-            DetailViewModel = vm;
+            DetailViewModel = (BaseViewModel) Scope.Resolve(type);
         }
     }
 }

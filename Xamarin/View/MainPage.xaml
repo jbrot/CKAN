@@ -4,9 +4,6 @@
                   xmlns:model="clr-namespace:CKAN.Xamarin.ViewModel;assembly=CKAN-Xamarin"
                   xmlns:local="clr-namespace:CKAN.Xamarin.View"
                   x:Class="CKAN.Xamarin.View.MainPage">
-    <MasterDetailPage.BindingContext>
-        <model:MainPageViewModel />
-    </MasterDetailPage.BindingContext>
     <MasterDetailPage.Detail>
         <local:BindableContentPage Content="{Binding DetailViewModel, Converter={StaticResource viewModelToView}}" />
     </MasterDetailPage.Detail>

@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using CKAN.Xamarin.ViewModel;
 using Xamarin.Forms;
 
 namespace CKAN.Xamarin.View
 {
-    public partial class UpdatesView : ContentView
+    public partial class UpdatesView : ContentView, IMvvmView<UpdatesViewModel>
     {
-        public UpdatesView ()
+        public UpdatesViewModel ViewModel { get; }
+
+        public UpdatesView (UpdatesViewModel vm)
         {
+            ViewModel = vm;
             InitializeComponent();
+            BindingContext = vm;
         }
     }
 }

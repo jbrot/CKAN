@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using CKAN.Xamarin.ViewModel;
 using Xamarin.Forms;
 
 namespace CKAN.Xamarin.View
 {
-    public partial class SettingsView : ContentView
+    public partial class SettingsView : ContentView, IMvvmView<SettingsViewModel>
     {
-        public SettingsView ()
+        public SettingsViewModel ViewModel { get; }
+
+        public SettingsView (SettingsViewModel vm)
         {
+            ViewModel = vm;
             InitializeComponent();
+            BindingContext = vm;
         }
     }
 }

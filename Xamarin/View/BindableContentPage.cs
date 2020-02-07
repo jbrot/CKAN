@@ -20,7 +20,6 @@ namespace CKAN.Xamarin.View
             // render until we resize. So, we force an imperceptible resize to cause
             // it to show immediately.
             var mdv = Parent as MasterDetailPage;
-            mdv.NativeSizeChanged();
             var delta = mdv.Y == 0 ? 1 : -1;
             mdv.Layout(new Rectangle(mdv.X, mdv.Y + delta, mdv.Width, mdv.Height - delta));
         }
