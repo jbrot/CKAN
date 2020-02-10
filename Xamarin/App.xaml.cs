@@ -57,6 +57,8 @@ namespace CKAN.Xamarin
                 // Register services as singletons
                 builder.RegisterAssemblyTypes(asm)
                        .Where(t => t.Name.EndsWith("Service"))
+                       .AsImplementedInterfaces()
+                       .AsSelf()
                        .SingleInstance();
                 // If we have a KSPManager, register it so it will get passed
                 // to CkanService. Otherwise, let CkanService construct its own.

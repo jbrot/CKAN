@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -17,21 +18,14 @@ namespace CKAN.Xamarin.Service
     {
         private KSPManager Manager;
 
-        /// <summary>
-        /// Autofac will use this constructor if no KSPManager is registered.
-        /// This means we need to create our own.
-        /// </summary>
-        public CkanService()
-        { }
+        private IDialogService dialogService;
+        private RegistryService registryService;
 
-        /// <summary>
-        /// Autofac will use this constructor if a KSPManager is registered.
-        /// In this case, we can jump straight to instance configuration.
-        /// </summary>
-        /// <param name="manager"></param>
-        public CkanService (KSPManager manager)
+        public CkanService (RegistryService rs, IDialogService ds, KSPManager manager = null)
         {
-            manager = Manager;
+            registryService = rs;
+            dialogService = ds;
+            Manager = manager;
         }
 
         public void Dispose ()
@@ -52,7 +46,52 @@ namespace CKAN.Xamarin.Service
                     var mgr = new KSPManager(new NullUser());
                     await Device.InvokeOnMainThreadAsync(() => Manager = mgr);
                 }
+
+                KSP ksp = Manager.CurrentInstance ?? Manager.GetPreferredInstance();
+                if (!await TryLoadKspInstance(ksp)) {
+                    await Device.InvokeOnMainThreadAsync(() => Application.Current.Quit());
+                }
             });
+        }
+
+        private async Task<bool> TryLoadKspInstance (KSP ksp)
+        {
+            bool retry;
+            do {
+                try {
+                    retry = false;
+
+                    var rm = RegistryManager.Instance(ksp);
+                    registryService.Registry = rm;
+                } catch (RegistryInUseKraken k) {
+                    if (await dialogService.DisplayAlert("Lock File In User",
+                        $"Lock file with live process ID found at {k.lockfilePath}\n\n"
+                        + "This means that another instance of CKAN probably is accessing this instance."
+                        + " You can delete the file to continue, but data corruption is very likely.\n\n"
+                        + "Do you want to delete this lock file to force access?",
+                        "Force", "Cancel")) {
+                        File.Delete(k.lockfilePath);
+                        retry = true;
+                    } else {
+                        // User cancelled, return failure
+                        return false;
+                    }
+
+                } catch (NotKSPDirKraken k) {
+                    await dialogService.DisplayAlert("Error",
+                        $"Error loading {ksp.GameDir()}:\n{k.Message}",
+                        "OK");
+                    return false;
+
+                } catch (Exception e) {
+                    await dialogService.DisplayAlert("Error",
+                        $"Error loading {Path.Combine(ksp.CkanDir(), "registry.json")}:\n{e.Message}",
+                        "OK");
+                    return false;
+                }
+            } while (retry);
+
+            return true;
         }
     }
 }
