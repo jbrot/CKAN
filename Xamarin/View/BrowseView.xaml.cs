@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using CKAN.Xamarin.ViewModel;
 using Xamarin.Forms;
 
@@ -13,7 +14,7 @@ namespace CKAN.Xamarin.View
         {
             ViewModel = vm;
             InitializeComponent();
-            BindingContext = vm;
+            BindingContext = ViewModel;
         }
     }
 }

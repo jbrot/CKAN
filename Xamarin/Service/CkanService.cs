@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -14,23 +17,62 @@ namespace CKAN.Xamarin.Service
     /// Classes which end with Service are automatically instantiated as
     /// singletons by Autofac (this is set up in App).
     /// </summary>
-    public class CkanService : IDisposable
+    public class CkanService : IDisposable, INotifyPropertyChanged
     {
-        private KSPManager Manager;
+        private KSPManager manager;
+        public KSPManager KSPManager {
+            get { return manager; }
+        }
+        public Task<bool> SetKSPManager(KSPManager mgr)
+        {
+            return Device.InvokeOnMainThreadAsync(() => SetProperty(ref manager, mgr, nameof(KSPManager)));
+        }
+
+        private RegistryManager registry;
+        public RegistryManager Registry {
+            get { return registry; }
+        }
+        public Task<bool> SetRegistry(RegistryManager rm)
+        {
+            return Device.InvokeOnMainThreadAsync(() => SetProperty(ref registry, rm, nameof(Registry)));
+        }
+
+        #region INotifyPropertyChanged
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected bool SetProperty<T> (ref T field, T value, [CallerMemberName]string name = null)
+        {
+            if (EqualityComparer<T>.Default.Equals(field, value)) {
+                return false;
+            }
+
+            field = value;
+            OnPropertyChanged(name);
+            return true;
+        }
+
+        protected void OnPropertyChanged(string name)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
+        #endregion
 
         private IDialogService dialogService;
-        private RegistryService registryService;
 
-        public CkanService (RegistryService rs, IDialogService ds, KSPManager manager = null)
+        public CkanService (IDialogService ds, KSPManager mgr = null)
         {
-            registryService = rs;
             dialogService = ds;
-            Manager = manager;
+
+            // We don't want to martial to the main thread to set the
+            // starting value.
+            manager = mgr;
         }
 
         public void Dispose ()
         {
-            Manager.Dispose();
+            KSPManager.Dispose();
         }
 
         /// <summary>
@@ -42,13 +84,13 @@ namespace CKAN.Xamarin.Service
         public void Init()
         {
             Task.Run(async () => {
-                if (Manager == null) {
+                if (KSPManager == null) {
                     var mgr = new KSPManager(new NullUser());
-                    await Device.InvokeOnMainThreadAsync(() => Manager = mgr);
+                    await SetKSPManager(mgr);
                 }
 
-                KSP ksp = Manager.CurrentInstance ?? Manager.GetPreferredInstance();
-                if (!await TryLoadKspInstance(ksp)) {
+                KSP ksp = KSPManager.CurrentInstance ?? KSPManager.GetPreferredInstance();
+                if (ksp != null && !await TryLoadKspInstance(ksp)) {
                     await Device.InvokeOnMainThreadAsync(() => Application.Current.Quit());
                 }
             });
@@ -62,7 +104,7 @@ namespace CKAN.Xamarin.Service
                     retry = false;
 
                     var rm = RegistryManager.Instance(ksp);
-                    registryService.Registry = rm;
+                    await SetRegistry(rm);
                 } catch (RegistryInUseKraken k) {
                     if (await dialogService.DisplayAlert("Lock File In User",
                         $"Lock file with live process ID found at {k.lockfilePath}\n\n"
