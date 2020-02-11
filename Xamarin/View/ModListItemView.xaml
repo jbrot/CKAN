@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="CKAN.Xamarin.View.ModListItemView">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Frame HeightRequest="40"
+               WidthRequest="40"
+               CornerRadius="20"
+               Grid.Row="0"
+               Grid.RowSpan="2"
+               Grid.Column="0"
+               BackgroundColor="Maroon">
+            <Label Text="7"
+                   TextColor="White"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                   VerticalTextAlignment="Center" />
+        </Frame>
+        <Label Grid.Row="0"
+               Grid.Column="1"
+               FormattedText="{Binding Title}" />
+        <Label Grid.Row="1"
+               Grid.Column="1"
+               FormattedText="{Binding Body}" />
+        <Button Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="3"
+                WidthRequest="100"
+                Text="Install" />
+    </Grid>
+</ContentView>

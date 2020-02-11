@@ -9,11 +9,12 @@
     </MasterDetailPage.Detail>
     <MasterDetailPage.Master>
         <ContentPage Title="CKAN"
-                     BackgroundColor="#b44" >
+                     BackgroundColor="#b44">
             <StackLayout>
                 <Image Source="Logo" Margin="20" />
                 <local:CommandListView ItemsSource="{Binding Items}"
-                                       ItemSelectedCommand="{Binding NavigationSelectedCommand}">
+                                       ItemSelectedCommand="{Binding NavigationSelectedCommand}"
+                                       BackgroundColor="Transparent">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
@@ -23,7 +24,9 @@
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
                                     <Image Source="{Binding Icon}" />
-                                    <Label Grid.Column="1" Text="{Binding Label}" />
+                                    <Label Grid.Column="1"
+                                           Text="{Binding Label}"
+                                           TextColor="White" />
                                 </Grid>
                             </ViewCell>
                         </DataTemplate>

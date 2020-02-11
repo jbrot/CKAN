@@ -11,20 +11,14 @@ namespace CKAN.Xamarin.ViewModel
     {
         private CkanService CkanService;
 
-        public ObservableCollection<string> ModList { get; }
+        public ObservableCollection<ModListItemViewModel> ModList { get; }
 
         public BrowseViewModel (ILifetimeScope scope, CkanService ckan)
             : base(scope)
         {
             CkanService = ckan;
             CkanService.PropertyChanged += OnServicePropertyChanged;
-            ModList = new ObservableCollection<string>() {
-                "Test 1",
-                "Test 2",
-                "Test 3",
-                "Test 4",
-                "Test 5"
-            };
+            ModList = new ObservableCollection<ModListItemViewModel>();
 
             if (CkanService.Registry != null) {
                 UpdateModList();
@@ -62,7 +56,7 @@ namespace CKAN.Xamarin.ViewModel
 
             ModList.Clear();
             foreach (CkanModule module in allMods) {
-                ModList.Add(module.name);
+                ModList.Add(new ModListItemViewModel(module));
             }
         }
     }
