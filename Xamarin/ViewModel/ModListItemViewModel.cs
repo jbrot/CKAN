@@ -1,4 +1,5 @@
 ﻿using System;
+using CKAN.Xamarin.Model;
 using Xamarin.Forms;
 
 namespace CKAN.Xamarin.ViewModel
@@ -47,10 +48,13 @@ namespace CKAN.Xamarin.ViewModel
             }
         }
 
-        public ModListItemViewModel (CkanModule mdl)
+        public ModAction Action { get; }
+
+        public ModListItemViewModel (CkanModule mdl, ModAction act)
             : base(null)
         {
             Model = mdl;
+            Action = act;
         }
     }
 }

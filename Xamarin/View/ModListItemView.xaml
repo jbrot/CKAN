@@ -1,17 +1,20 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentView xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="CKAN.Xamarin.View.ModListItemView">
-    <Grid>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CKAN.Xamarin.View.ModListItemView"
+             HeightRequest="80" >
+    <Grid RowSpacing="0"
+          ColumnSpacing="0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="55" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="80" />
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="250" />
         </Grid.ColumnDefinitions>
-        <Frame HeightRequest="40"
-               WidthRequest="40"
+        <Frame Margin="20"
                CornerRadius="20"
                Grid.Row="0"
                Grid.RowSpan="2"
@@ -26,14 +29,20 @@
         </Frame>
         <Label Grid.Row="0"
                Grid.Column="1"
-               FormattedText="{Binding Title}" />
+               FormattedText="{Binding Title}"
+               Margin="4" />
         <Label Grid.Row="1"
                Grid.Column="1"
-               FormattedText="{Binding Body}" />
+               FormattedText="{Binding Body}"
+               Margin="4" />
         <Button Grid.Row="0"
                 Grid.RowSpan="2"
-                Grid.Column="3"
-                WidthRequest="100"
-                Text="Install" />
+                Grid.Column="2"
+                WidthRequest="250"
+                Margin="40, 20"
+                CornerRadius="20"
+                Text="{Binding Action, Converter={StaticResource modActionToText}}"
+                FontSize="20"
+                BackgroundColor="{Binding Action, Converter={StaticResource modActionToColor}}" />
     </Grid>
 </ContentView>

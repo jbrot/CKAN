@@ -14,8 +14,6 @@ namespace CKAN.Xamarin.Converter
     /// </summary>
     public class ViewModelToViewConverter : IValueConverter
     {
-        private IDictionary<Type, XView> map = new Dictionary<Type, XView>();
-
         public object Convert (object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is BaseViewModel bvm) {

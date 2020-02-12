@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:CKAN.Xamarin.View"
              x:Class="CKAN.Xamarin.View.BrowseView">
     <ListView ItemsSource="{Binding ModList}"
-              RowHeight="100">
+              RowHeight="80">
         <ListView.ItemTemplate>
             <DataTemplate>
                 <ViewCell>

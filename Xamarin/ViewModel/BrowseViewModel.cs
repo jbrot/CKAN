@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using Autofac;
+using CKAN.Xamarin.Model;
 using CKAN.Xamarin.Service;
 
 namespace CKAN.Xamarin.ViewModel
@@ -22,6 +23,13 @@ namespace CKAN.Xamarin.ViewModel
 
             if (CkanService.Registry != null) {
                 UpdateModList();
+            } else {
+                // TODO: Replace this testing code with a loading screen.
+                ModList.Add(new ModListItemViewModel(new CkanModule {
+                    name = "Test mod",
+                    @abstract = "Test description",
+                    version = new Versioning.ModuleVersion("1.2.3")
+                }, ModAction.Install)); ;
             }
         }
 
@@ -41,8 +49,21 @@ namespace CKAN.Xamarin.ViewModel
         {
             var ksp = CkanService.KSPManager.CurrentInstance;
             var registry = CkanService.Registry.registry;
+            
+            ModList.Clear();
 
-            var allMods = new List<CkanModule>(registry.CompatibleModules(ksp.VersionCriteria()));
+            foreach (CkanModule module in registry.CompatibleModules(ksp.VersionCriteria())) {
+                var act = ModAction.Install;
+                if (registry.IsInstalled(module.identifier)) {
+                    if (registry.HasUpdate(module.identifier, ksp.VersionCriteria())) {
+                        act = ModAction.Update;
+                    } else {
+                        act = ModAction.Remove;
+                    }
+                }
+                ModList.Add(new ModListItemViewModel(module, act));
+            }
+
             foreach (InstalledModule im in registry.InstalledModules) {
                 CkanModule m = null;
                 try {
@@ -50,13 +71,8 @@ namespace CKAN.Xamarin.ViewModel
                 } catch (ModuleNotFoundKraken) { }
                 if (m == null) {
                     // Add unavailable installed mods to the list
-                    allMods.Add(im.Module);
+                    ModList.Add(new ModListItemViewModel(im.Module, ModAction.Unknown));
                 }
-            }
-
-            ModList.Clear();
-            foreach (CkanModule module in allMods) {
-                ModList.Add(new ModListItemViewModel(module));
             }
         }
     }

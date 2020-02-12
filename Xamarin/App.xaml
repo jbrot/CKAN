@@ -8,5 +8,7 @@
              x:Class="CKAN.Xamarin.App" >
     <Application.Resources>
         <cvrt:ViewModelToViewConverter x:Key="viewModelToView" />
+        <cvrt:ModActionToColor x:Key="modActionToColor" />
+        <cvrt:ModActionToText x:Key="modActionToText" />
     </Application.Resources>
 </Application>
