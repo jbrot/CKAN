@@ -37,7 +37,12 @@ namespace CKAN.Xamarin
         /// </summary>
         private ILifetimeScope guiScope;
 
-        public App (KSPManager mgr)
+        /// <summary>
+        /// Create a new App. Use the registrations Action to register any
+        /// additional types with Autofac that won't be registered
+        /// automatically.
+        /// </summary>
+        public App (KSPManager mgr, Action<ContainerBuilder> registrations = null)
         {
             InitializeComponent();
 
@@ -69,6 +74,7 @@ namespace CKAN.Xamarin
                            .As<KSPManager>().ExternallyOwned();
                 }
 
+                registrations?.Invoke(builder);
             });
 
             // Resolve the main pages in the outer LifetimeScope, as we

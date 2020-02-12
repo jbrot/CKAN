@@ -1,4 +1,6 @@
 ﻿using AppKit;
+using Autofac;
+using CKAN.Xamarin.Mac.Service;
 using Foundation;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.MacOS;
@@ -24,7 +26,9 @@ namespace CKAN.Xamarin.Mac
         public override void DidFinishLaunching(NSNotification notification)
         {
             Forms.Init();
-            LoadApplication(new App(null));
+            LoadApplication(new App(null, builder => {
+                builder.RegisterType<FileService>().AsImplementedInterfaces();
+            }));
             base.DidFinishLaunching(notification);
         }
 

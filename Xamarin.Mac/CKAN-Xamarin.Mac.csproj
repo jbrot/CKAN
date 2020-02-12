@@ -89,6 +89,7 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="Service\FileService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xamarin\CKAN-Xamarin.csproj">
@@ -122,6 +123,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets.xcassets\Logo.imageset\" />
+    <Folder Include="Service\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
   <Import Project="..\_build\lib\nuget\Xamarin.Forms.4.1.0.618606\build\Xamarin.Forms.targets" Condition="Exists('..\_build\lib\nuget\Xamarin.Forms.4.1.0.618606\build\Xamarin.Forms.targets')" />
