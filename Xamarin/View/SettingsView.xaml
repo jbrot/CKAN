@@ -1,8 +1,32 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:CKAN.Xamarin.View"
              x:Class="CKAN.Xamarin.View.SettingsView">
-    <ContentView.Content>
-        <Label Text="This will be the settings page." />
-    </ContentView.Content>
+    <ScrollView>
+        <StackLayout Padding="25">
+            <Label Text="Settings" FontSize="33" TextColor="Gray" />
+            <BoxView WidthRequest="400" HeightRequest="1" Color="Gray" />
+
+            <BoxView HeightRequest="35" Color="Transparent" />
+
+            <Label Text="KSP Locations" FontSize="25" TextColor="Gray" />
+            <local:EditableList />
+
+            <BoxView HeightRequest="15" Color="Transparent" />
+
+            <Label Text="Repositories" FontSize="25" TextColor="Gray" />
+            <local:EditableList />
+
+            <BoxView HeightRequest="15" Color="Transparent" />
+
+            <Label Text="Authentication Tokens" FontSize="25" TextColor="Gray" />
+            <local:EditableList />
+
+            <BoxView HeightRequest="15" Color="Transparent" />
+
+            <Label Text="Cache" FontSize="25" TextColor="Gray" />
+
+        </StackLayout>
+    </ScrollView>
 </ContentView>
