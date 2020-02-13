@@ -12,13 +12,13 @@
                      BackgroundColor="#b44">
             <StackLayout>
                 <Image Source="Logo" Margin="20" />
-                <local:CommandListView ItemsSource="{Binding Items}"
-                                       ItemSelectedCommand="{Binding NavigationSelectedCommand}"
-                                       BackgroundColor="Transparent">
+                <local:SelectableListView ItemsSource="{Binding Items}"
+                                          ItemSelectedCommand="{Binding NavigationSelectedCommand}"
+                                          BackgroundColor="Transparent">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <Grid Padding="5,10">
+                                <Grid Padding="5,10" BackgroundColor="{Binding Selected, Converter={x:StaticResource selectedToColor}}">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="30"/>
                                         <ColumnDefinition Width="*" />
@@ -31,7 +31,7 @@
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
-                </local:CommandListView>
+                </local:SelectableListView>
             </StackLayout>
         </ContentPage>
     </MasterDetailPage.Master>
