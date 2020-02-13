@@ -11,17 +11,17 @@
             <BoxView HeightRequest="35" Color="Transparent" />
 
             <Label Text="KSP Locations" FontSize="25" TextColor="Gray" />
-            <local:EditableList />
+            <local:PairedEditableList ItemsSource="{Binding TempItems}" />
 
             <BoxView HeightRequest="15" Color="Transparent" />
 
             <Label Text="Repositories" FontSize="25" TextColor="Gray" />
-            <local:EditableList />
+            <local:PairedEditableList ItemsSource="{Binding TempItems}" />
 
             <BoxView HeightRequest="15" Color="Transparent" />
 
             <Label Text="Authentication Tokens" FontSize="25" TextColor="Gray" />
-            <local:EditableList />
+            <local:PairedEditableList ItemsSource="{Binding TempItems, }" />
 
             <BoxView HeightRequest="15" Color="Transparent" />
 

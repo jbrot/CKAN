@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using CKAN.Xamarin.ViewModel;
 using Xamarin.Forms;
 

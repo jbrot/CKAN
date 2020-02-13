@@ -10,5 +10,6 @@
         <cvrt:ViewModelToViewConverter x:Key="viewModelToView" />
         <cvrt:ModActionToColor x:Key="modActionToColor" />
         <cvrt:ModActionToText x:Key="modActionToText" />
+        <cvrt:PELISelectedToColorConverter x:Key="selectedToColor" />
     </Application.Resources>
 </Application>

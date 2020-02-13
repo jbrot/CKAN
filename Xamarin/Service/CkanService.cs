@@ -17,7 +17,7 @@ namespace CKAN.Xamarin.Service
     /// Classes which end with Service are automatically instantiated as
     /// singletons by Autofac (this is set up in App).
     /// </summary>
-    public class CkanService : IDisposable, INotifyPropertyChanged
+    public class CkanService : AbstractPropertyChangeNotifier, IDisposable
     {
         private KSPManager manager;
         public KSPManager KSPManager {
@@ -36,28 +36,6 @@ namespace CKAN.Xamarin.Service
         {
             return Device.InvokeOnMainThreadAsync(() => SetProperty(ref registry, rm, nameof(Registry)));
         }
-
-        #region INotifyPropertyChanged
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected bool SetProperty<T> (ref T field, T value, [CallerMemberName]string name = null)
-        {
-            if (EqualityComparer<T>.Default.Equals(field, value)) {
-                return false;
-            }
-
-            field = value;
-            OnPropertyChanged(name);
-            return true;
-        }
-
-        protected void OnPropertyChanged(string name)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
-
-        #endregion
 
         private IDialogService dialogService;
 
