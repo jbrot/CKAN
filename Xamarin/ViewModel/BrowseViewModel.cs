@@ -29,13 +29,8 @@ namespace CKAN.Xamarin.ViewModel
                     name = "Test mod",
                     @abstract = "Test description",
                     version = new Versioning.ModuleVersion("1.2.3")
-                }, ModAction.Install)); ;
+                }, ModAction.Install));
             }
-        }
-
-        ~BrowseViewModel()
-        {
-            CkanService.PropertyChanged -= OnServicePropertyChanged;
         }
 
         private void OnServicePropertyChanged (object sender, PropertyChangedEventArgs e)

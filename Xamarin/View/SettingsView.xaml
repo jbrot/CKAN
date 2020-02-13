@@ -11,17 +11,84 @@
             <BoxView HeightRequest="35" Color="Transparent" />
 
             <Label Text="KSP Locations" FontSize="25" TextColor="Gray" />
-            <local:PairedEditableList ItemsSource="{Binding TempItems}" />
+            <local:SettingsList ItemsSource="{Binding KspInstances}">
+                <local:SettingsList.Header>
+                    <Grid Padding="10, 3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="85" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2*" />
+                        </Grid.ColumnDefinitions>
+                        <Label Text="Selected" Grid.Column="0" VerticalTextAlignment="Center" />
+                        <Label Text="Name" Grid.Column="1" VerticalTextAlignment="Center" />
+                        <Label Text="Path" Grid.Column="2" VerticalTextAlignment="Center" />
+                    </Grid>
+                </local:SettingsList.Header>
+                <local:SettingsList.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="10, 3" BackgroundColor="{Binding Selected, Converter={x:StaticResource selectedToColor}}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="2*" />
+                                </Grid.ColumnDefinitions>
+                                <Label Text="{Binding ColumnA}" Grid.Column="0" VerticalTextAlignment="Center" />
+                                <Label Text="{Binding ColumnB}" Grid.Column="1" VerticalTextAlignment="Center" />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </local:SettingsList.ItemTemplate>
+                <local:SettingsList.Footer>
+                    <StackLayout Orientation="Horizontal"
+                                 Grid.Row="4"
+                                 Grid.Column="0"
+                                 Grid.ColumnSpan="2">
+                        <Button Text="+" />
+                        <Button Text="-" />
+                        <Button Text="Edit" />
+                    </StackLayout>
+                </local:SettingsList.Footer>
+            </local:SettingsList>
 
             <BoxView HeightRequest="15" Color="Transparent" />
 
             <Label Text="Repositories" FontSize="25" TextColor="Gray" />
-            <local:PairedEditableList ItemsSource="{Binding TempItems}" />
+            <local:SettingsList ItemsSource="{Binding TempItems}">
+                <local:SettingsList.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="10, 3" BackgroundColor="{Binding Selected, Converter={x:StaticResource selectedToColor}}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="2*" />
+                                </Grid.ColumnDefinitions>
+                                <Label Text="{Binding ColumnA}" Grid.Column="0" VerticalTextAlignment="Center" />
+                                <Label Text="{Binding ColumnB}" Grid.Column="1" VerticalTextAlignment="Center" />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </local:SettingsList.ItemTemplate>
+            </local:SettingsList>
 
             <BoxView HeightRequest="15" Color="Transparent" />
 
             <Label Text="Authentication Tokens" FontSize="25" TextColor="Gray" />
-            <local:PairedEditableList ItemsSource="{Binding TempItems, }" />
+            <local:SettingsList ItemsSource="{Binding TempItems}">
+                <local:SettingsList.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="10, 3" BackgroundColor="{Binding Selected, Converter={x:StaticResource selectedToColor}}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="2*" />
+                                </Grid.ColumnDefinitions>
+                                <Label Text="{Binding ColumnA}" Grid.Column="0" VerticalTextAlignment="Center" />
+                                <Label Text="{Binding ColumnB}" Grid.Column="1" VerticalTextAlignment="Center" />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </local:SettingsList.ItemTemplate>
+            </local:SettingsList>
 
             <BoxView HeightRequest="15" Color="Transparent" />
 

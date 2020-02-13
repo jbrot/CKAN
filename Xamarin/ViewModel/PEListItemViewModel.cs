@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
-namespace CKAN.Xamarin.Model
+namespace CKAN.Xamarin.ViewModel
 {
-    public class PEListItemViewModel : AbstractPropertyChangeNotifier
+    public class PEListItemViewModel : AbstractPropertyChangeNotifier, ISelectableListItemViewModel
     {
         private string columnA;
         public string ColumnA {
