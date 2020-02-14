@@ -15,25 +15,30 @@
                 <local:SettingsList.Header>
                     <Grid Padding="10, 3">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="85" />
+                            <ColumnDefinition Width="20" />
                             <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="85" />
                             <ColumnDefinition Width="2*" />
                         </Grid.ColumnDefinitions>
-                        <Label Text="Selected" Grid.Column="0" VerticalTextAlignment="Center" />
                         <Label Text="Name" Grid.Column="1" VerticalTextAlignment="Center" />
-                        <Label Text="Path" Grid.Column="2" VerticalTextAlignment="Center" />
+                        <Label Text="Version" Grid.Column="2" VerticalTextAlignment="Center" />
+                        <Label Text="Path" Grid.Column="3" VerticalTextAlignment="Center" />
                     </Grid>
                 </local:SettingsList.Header>
                 <local:SettingsList.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Grid Padding="10, 3" BackgroundColor="{Binding Selected, Converter={x:StaticResource selectedToColor}}">
+                            <Grid Padding="10, 3">
                                 <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="20" />
                                     <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="85" />
                                     <ColumnDefinition Width="2*" />
                                 </Grid.ColumnDefinitions>
-                                <Label Text="{Binding ColumnA}" Grid.Column="0" VerticalTextAlignment="Center" />
-                                <Label Text="{Binding ColumnB}" Grid.Column="1" VerticalTextAlignment="Center" />
+                                <Label Text="{Binding AutoStart, Converter={x:StaticResource boolToIndicator}}" Grid.Column="0" VerticalTextAlignment="Center" FontSize="14" />
+                                <Label FormattedText="{Binding NameText}" Grid.Column="1" VerticalTextAlignment="Center" FontSize="14" />
+                                <Label Text="{Binding Version}" Grid.Column="2" VerticalTextAlignment="Center" FontSize="14" />
+                                <Label Text="{Binding Path}" Grid.Column="3" VerticalTextAlignment="Center" FontSize="12" />
                             </Grid>
                         </ViewCell>
                     </DataTemplate>

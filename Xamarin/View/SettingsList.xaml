@@ -6,7 +6,7 @@
     <Frame BorderColor="Gray"
             CornerRadius="5"
             HasShadow="False"
-            Margin="5, 5, 105, 5"
+            Margin="5"
             Padding="0">
         <StackLayout Padding="10">
             <!-- Header -->
@@ -20,7 +20,7 @@
             <local:SelectableListView
                 Margin="0"
                 HeightRequest="200"
-                RowHeight="35"
+                RowHeight="40"
                 SelectionMode="Single"
                 ItemsSource="{Binding ItemsSource, Source={x:RelativeSource AncestorType={x:Type local:SettingsList}}}"
                 ItemTemplate="{Binding ItemTemplate, Source={x:RelativeSource AncestorType={x:Type local:SettingsList}}}"

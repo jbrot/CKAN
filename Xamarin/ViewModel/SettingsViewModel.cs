@@ -12,7 +12,7 @@ namespace CKAN.Xamarin.ViewModel
     {
         private CkanService CkanService;
 
-        public IList<PEListItemViewModel> KspInstances { get; } = new ObservableCollection<PEListItemViewModel>();
+        public IList<KspListItemViewModel> KspInstances { get; } = new ObservableCollection<KspListItemViewModel>();
 
         public IList<PEListItemViewModel> TempItems { get; }
 
@@ -41,10 +41,12 @@ namespace CKAN.Xamarin.ViewModel
         private void UpdateKspInstances ()
         {
             KspInstances.Clear();
-            foreach (KeyValuePair<string,KSP> entry in CkanService.KSPManager.Instances) {
-                KspInstances.Add(new PEListItemViewModel {
-                    ColumnA = entry.Key,
-                    ColumnB = entry.Value.GameDir()
+            var manager = CkanService.KSPManager;
+            foreach (KeyValuePair<string,KSP> entry in manager.Instances) {
+                KspInstances.Add(new KspListItemViewModel {
+                    Ksp = entry.Value,
+                    Active = manager.CurrentInstance == entry.Value,
+                    AutoStart = manager.AutoStartInstance == entry.Key,
                 });
             }
         }

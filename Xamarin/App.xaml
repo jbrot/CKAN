@@ -11,5 +11,6 @@
         <cvrt:ModActionToColor x:Key="modActionToColor" />
         <cvrt:ModActionToText x:Key="modActionToText" />
         <cvrt:PELISelectedToColorConverter x:Key="selectedToColor" />
+        <cvrt:BoolToIndicatorConverter x:Key="boolToIndicator" />
     </Application.Resources>
 </Application>
