@@ -2,15 +2,33 @@
 
 All notable changes to this project will be documented in this file.
 
-## v1.26.11
+## v1.27.1
 
 ### Features
 
+- [Netkan] Create skip-releases option for NetKAN (#2996 by: DasSkelett; reviewed: HebaruSan)
+
 ### Bugfixes
-- [GUI] Fix null reference in recommendations (#2984 by: HebaruSan; reviewed: politas)
-- [ConsoleUI] Fix NRE on download errors in ConsoleUI (#2987 by: HebaruSan; reviewed: politas, DasSkelett)
+
+- [GUI] Don't report an unknown error if it is known (#2995 by: DasSkelett; reviewed: HebaruSan)
+- [GUI] Extend -single-instance fix to 1.9 (#3001 by: DasSkelett; reviewed: HebaruSan)
+- [Core] Check compatibility of providing modules (#3003 by: HebaruSan; reviewed: DasSkelett)
 
 ### Internal
+
+## v1.27.0 (Bussard)
+
+### Bugfixes
+
+- [GUI] Fix null reference in recommendations (#2984 by: HebaruSan; reviewed: politas)
+- [ConsoleUI] Fix NRE on download errors in ConsoleUI (#2987 by: HebaruSan; reviewed: politas, DasSkelett)
+- [GUI] Only update provides tab from GUI thread (#2989 by: HebaruSan; reviewed: politas)
+- [ConsoleUI] Fix ArgumentException in ConsoleUI recommendations (#2990 by: HebaruSan; reviewed: DasSkelett)
+
+### Internal
+
+- [Build] Update Cake to 0.37.0 (#2985 by: DasSkelett; reviewed: HebaruSan)
+- [Spec] Update tags section of spec (#2991 by: HebaruSan; reviewed: DasSkelett)
 
 ## v1.26.10 (Alcubierre)
 
