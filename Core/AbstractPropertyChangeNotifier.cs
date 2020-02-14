@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace CKAN.Xamarin
+namespace CKAN
 {
     /// <summary>
     /// This class provides some boilerplate code which makes implementing

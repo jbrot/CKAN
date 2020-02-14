@@ -64,7 +64,6 @@ namespace CKAN.Xamarin.Service
             Task.Run(async () => {
                 if (KSPManager == null) {
                     var mgr = new KSPManager(new NullUser());
-                    mgr.GetPreferredInstance();
                     await SetKSPManager(mgr);
                 }
 

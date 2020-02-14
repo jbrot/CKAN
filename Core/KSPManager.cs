@@ -14,11 +14,16 @@ namespace CKAN
     /// <summary>
     /// Manage multiple KSP installs.
     /// </summary>
-    public class KSPManager : IDisposable
+    public class KSPManager : AbstractPropertyChangeNotifier, IDisposable
     {
         public IUser User { get; set; }
         public IConfiguration Configuration { get; set; }
-        public KSP CurrentInstance { get; set; }
+
+        private KSP currentInstance;
+        public KSP CurrentInstance {
+            get => currentInstance;
+            set { SetProperty(ref currentInstance, value); }
+        }
 
         public NetModuleCache Cache { get; private set; }
 
