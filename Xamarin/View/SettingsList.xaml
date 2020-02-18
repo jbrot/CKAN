@@ -18,6 +18,7 @@
 
             <!-- Content -->
             <local:SelectableListView
+                x:Name="list"
                 Margin="0"
                 HeightRequest="200"
                 RowHeight="40"

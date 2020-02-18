@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows.Input;
 using Autofac;
 using CKAN.Xamarin.Model;
 using CKAN.Xamarin.Service;
@@ -15,6 +16,11 @@ namespace CKAN.Xamarin.ViewModel
         private CkanService CkanService;
 
         public IList<KspListItemViewModel> KspInstances { get; } = new ObservableCollection<KspListItemViewModel>();
+        public ICommand NewKspInstance { get; private set; }
+        public ICommand DeleteKspInstance { get; private set; }
+        public ICommand EditKspInstance { get; private set; }
+        public ICommand ActivateKspInstance { get; private set; }
+        public ICommand MakeDefaultKspInstance { get; private set; }
 
         public IList<PEListItemViewModel> TempItems { get; }
 
@@ -29,6 +35,12 @@ namespace CKAN.Xamarin.ViewModel
                 CkanService.KSPManager.PropertyChanged += OnManagerPropertyChanged;
                 UpdateKspInstances();
             }
+
+            NewKspInstance = new Command(OnNewKspInstance);
+            DeleteKspInstance = new Command(OnDeleteKspInstance);
+            EditKspInstance = new Command(OnEditKspInstance);
+            ActivateKspInstance = new Command(OnActivateKspInstance);
+            MakeDefaultKspInstance = new Command(OnMakeDefaultKspInstance);
 
             TempItems = new List<PEListItemViewModel>() {
                 new PEListItemViewModel {
@@ -61,6 +73,12 @@ namespace CKAN.Xamarin.ViewModel
                 vm.Active = CkanService.KSPManager.CurrentInstance == vm.Ksp;
             }
         }
+
+        private void OnNewKspInstance() { }
+        private void OnDeleteKspInstance() { }
+        private void OnEditKspInstance() { }
+        private void OnActivateKspInstance() { }
+        private void OnMakeDefaultKspInstance() { }
 
         private void OnServicePropertyChanged (object sender, PropertyChangedEventArgs e)
         {

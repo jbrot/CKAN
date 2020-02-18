@@ -8,6 +8,8 @@ namespace CKAN.Xamarin.View
     {
         public SettingsViewModel ViewModel { get; }
 
+        public SettingsList SList { get => slist; }
+
         public SettingsView (SettingsViewModel vm)
         {
             ViewModel = vm;

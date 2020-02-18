@@ -11,7 +11,7 @@
             <BoxView HeightRequest="35" Color="Transparent" />
 
             <Label Text="KSP Locations" FontSize="25" TextColor="Gray" />
-            <local:SettingsList ItemsSource="{Binding KspInstances}">
+            <local:SettingsList ItemsSource="{Binding KspInstances}" x:Name="slist">
                 <local:SettingsList.Header>
                     <Grid Padding="10, 3">
                         <Grid.ColumnDefinitions>
@@ -28,7 +28,7 @@
                 <local:SettingsList.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Grid Padding="10, 3">
+                            <Grid Padding="10, 3" BackgroundColor="{Binding Selected, Converter={x:StaticResource selectedToColor}}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="20" />
                                     <ColumnDefinition Width="*" />
@@ -47,10 +47,18 @@
                     <StackLayout Orientation="Horizontal"
                                  Grid.Row="4"
                                  Grid.Column="0"
-                                 Grid.ColumnSpan="2">
-                        <Button Text="+" />
-                        <Button Text="-" />
-                        <Button Text="Edit" />
+                                 Grid.ColumnSpan="2"
+                                 BindingContext="{Binding Source={RelativeSource AncestorType={x:Type local:SettingsView}}}">
+                        <Button Text="+" Command="{Binding ViewModel.NewKspInstance}"/>
+                        <!-- WARNING: Binding Command overwrites IsEnabled, so we /must/ set IsEnabled after Command! -->
+                        <Button Text="-" Command="{Binding ViewModel.DeleteKspInstance}"
+                                IsEnabled="{Binding SList.List.SelectedItem, Converter={x:StaticResource notNull}}" />
+                        <Button Text="Edit" Command="{Binding ViewModel.EditKspInstance}"
+                                IsEnabled="{Binding SList.List.SelectedItem, Converter={x:StaticResource notNull}}" />
+                        <Button Text="Make Active" Command="{Binding ViewModel.ActivateKspInstance}"
+                                IsEnabled="{Binding SList.List.SelectedItem.Active, Converter={x:StaticResource negate}, FallbackValue=False}" />
+                        <Button Text="Make Default" Command="{Binding ViewModel.MakeDefaultKspInstance}"
+                                IsEnabled="{Binding SList.List.SelectedItem.AutoStart, Converter={x:StaticResource negate}, FallbackValue=False}" />
                     </StackLayout>
                 </local:SettingsList.Footer>
             </local:SettingsList>

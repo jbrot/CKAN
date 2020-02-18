@@ -12,5 +12,7 @@
         <cvrt:ModActionToText x:Key="modActionToText" />
         <cvrt:PELISelectedToColorConverter x:Key="selectedToColor" />
         <cvrt:BoolToIndicatorConverter x:Key="boolToIndicator" />
+        <cvrt:NegationConverter x:Key="negate" />
+        <cvrt:NotNullConverter x:Key="notNull" />
     </Application.Resources>
 </Application>

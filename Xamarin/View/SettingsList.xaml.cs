@@ -44,6 +44,7 @@ namespace CKAN.Xamarin.View
         }
         public static BindableProperty FooterProperty = BindableProperty.Create(nameof(Footer), typeof(XView), typeof(SettingsList));
 
+        public SelectableListView List { get => list; }
 
         public SettingsList ()
         {
