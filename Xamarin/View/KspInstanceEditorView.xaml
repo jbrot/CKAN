@@ -11,24 +11,42 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
                 <Label Text="Name:"
                        Grid.Row="0"
                        Grid.Column="0" />
-                <Entry WidthRequest="200"
+                <Entry Text="{Binding Name}"
+                       WidthRequest="200"
                        Grid.Row="0"
                        Grid.Column="1" />
+                <ActivityIndicator IsRunning="False"
+                                   Grid.Row="0"
+                                   Grid.Column="2" />
                 <Label Text="Path:"
                        Grid.Row="1"
                        Grid.Column="0" />
-                <Entry WidthRequest="200"
+                <Entry Text="{Binding Path}"
+                       IsReadOnly="True"
+                       WidthRequest="200"
                        Grid.Row="1"
-                       Grid.Column="1" />
+                       Grid.Column="1">
+                    <Entry.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding EditPathCommand}" />
+                    </Entry.GestureRecognizers>
+                </Entry>
+                <ActivityIndicator IsRunning="True"
+                                   Grid.Row="1"
+                                   Grid.Column="2" />
             </Grid>
             <BoxView HeightRequest="10" Color="Transparent" />
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="15">
                 <Button Text="Cancel" Command="{Binding CompleteCommand}" />
-                <Button Text="Accept" Command="{Binding CompleteCommand}" />
+                <Button Text="Accept" Command="{Binding CompleteCommand}" IsEnabled="{Binding IsValid}" />
             </StackLayout>
         </StackLayout>
     </Frame>

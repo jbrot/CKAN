@@ -40,7 +40,7 @@ namespace CKAN.Xamarin.ViewModel
 
             NewKspInstance = new Command(async() => await OnNewKspInstance());
             DeleteKspInstance = new Command(OnDeleteKspInstance);
-            EditKspInstance = new Command(OnEditKspInstance);
+            EditKspInstance = new Command(async () => await OnEditKspInstance());
             ActivateKspInstance = new Command(OnActivateKspInstance);
             MakeDefaultKspInstance = new Command(OnMakeDefaultKspInstance);
 
@@ -79,12 +79,19 @@ namespace CKAN.Xamarin.ViewModel
         private async Task OnNewKspInstance() {
             ILifetimeScope scope = Scope.BeginLifetimeScope();
             KspInstanceEditorViewModel vm = scope.Resolve<KspInstanceEditorViewModel>();
-            bool res = await RunModal(vm);
+            await RunModal(vm);
         }
 
         private void OnDeleteKspInstance() { }
 
-        private void OnEditKspInstance() { }
+        private async Task OnEditKspInstance()
+        {
+            ILifetimeScope scope = Scope.BeginLifetimeScope(builder => {
+                builder.RegisterInstance(SelectedKspInstance.Ksp).As(typeof(KSP)).ExternallyOwned();
+            });
+            KspInstanceEditorViewModel vm = scope.Resolve<KspInstanceEditorViewModel>();
+            await RunModal(vm);
+        }
 
         private void OnActivateKspInstance() { }
 

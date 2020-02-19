@@ -10,6 +10,6 @@ namespace CKAN.Xamarin.Service
     /// </summary>
     public interface IFileService
     {
-        Task<string> RunFileDialog ();
+        string RunFileDialog (string currentPath = null);
     }
 }
