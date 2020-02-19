@@ -13,10 +13,13 @@
                              Content="{Binding DetailViewModel, Converter={StaticResource viewModelToView}}" />
 
                 <!-- Modal overlays -->
-                <ContentView BackgroundColor="#C000"
-                             InputTransparent="False"
+                <BoxView BackgroundColor="#C000"
+                         InputTransparent="False"
                              AbsoluteLayout.LayoutBounds="0,0,1,1"
                              AbsoluteLayout.LayoutFlags="All"
+                             IsVisible="{Binding DetailViewModel.CurrentModal, Converter={x:StaticResource notNull}}" />
+                <ContentView AbsoluteLayout.LayoutBounds="0.5,0.3,-1,-1"
+                             AbsoluteLayout.LayoutFlags="PositionProportional"
                              IsVisible="{Binding DetailViewModel.CurrentModal, Converter={x:StaticResource notNull}}"
                              Content="{Binding DetailViewModel.CurrentModal, Converter={x:StaticResource viewModelToView}}" />
             </AbsoluteLayout>

@@ -2,5 +2,34 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CKAN.Xamarin.View.KspInstanceEditorView">
-    <Button Text="Complete" Command="{Binding CompleteCommand}" />
+    <Frame BackgroundColor="White" CornerRadius="10" Padding="20" WidthRequest="360">
+        <StackLayout>
+            <Label Text="KSP Instance Editor" FontSize="20" TextColor="Gray" />
+            <BoxView HeightRequest="1" Color="Gray" />
+            <BoxView HeightRequest="20" Color="Transparent" />
+            <Grid HorizontalOptions="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Label Text="Name:"
+                       Grid.Row="0"
+                       Grid.Column="0" />
+                <Entry WidthRequest="200"
+                       Grid.Row="0"
+                       Grid.Column="1" />
+                <Label Text="Path:"
+                       Grid.Row="1"
+                       Grid.Column="0" />
+                <Entry WidthRequest="200"
+                       Grid.Row="1"
+                       Grid.Column="1" />
+            </Grid>
+            <BoxView HeightRequest="10" Color="Transparent" />
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="15">
+                <Button Text="Cancel" Command="{Binding CompleteCommand}" />
+                <Button Text="Accept" Command="{Binding CompleteCommand}" />
+            </StackLayout>
+        </StackLayout>
+    </Frame>
 </ContentView>
