@@ -5,7 +5,22 @@
                   xmlns:local="clr-namespace:CKAN.Xamarin.View"
                   x:Class="CKAN.Xamarin.View.MainPage">
     <MasterDetailPage.Detail>
-        <local:BindableContentPage Content="{Binding DetailViewModel, Converter={StaticResource viewModelToView}}" />
+        <ContentPage>
+            <AbsoluteLayout>
+                <!-- Man content -->
+                <ContentView AbsoluteLayout.LayoutBounds="0,0,1,1"
+                             AbsoluteLayout.LayoutFlags="All"
+                             Content="{Binding DetailViewModel, Converter={StaticResource viewModelToView}}" />
+
+                <!-- Modal overlays -->
+                <ContentView BackgroundColor="#C000"
+                             InputTransparent="False"
+                             AbsoluteLayout.LayoutBounds="0,0,1,1"
+                             AbsoluteLayout.LayoutFlags="All"
+                             IsVisible="{Binding DetailViewModel.CurrentModal, Converter={x:StaticResource notNull}}"
+                             Content="{Binding DetailViewModel.CurrentModal, Converter={x:StaticResource viewModelToView}}" />
+            </AbsoluteLayout>
+        </ContentPage>
     </MasterDetailPage.Detail>
     <MasterDetailPage.Master>
         <ContentPage Title="CKAN"

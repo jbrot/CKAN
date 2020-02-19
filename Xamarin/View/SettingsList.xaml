@@ -18,14 +18,15 @@
 
             <!-- Content -->
             <local:SelectableListView
-                x:Name="list"
                 Margin="0"
                 HeightRequest="200"
                 RowHeight="40"
                 SelectionMode="Single"
-                ItemsSource="{Binding ItemsSource, Source={x:RelativeSource AncestorType={x:Type local:SettingsList}}}"
-                ItemTemplate="{Binding ItemTemplate, Source={x:RelativeSource AncestorType={x:Type local:SettingsList}}}"
-                ItemSelectedCommand="{Binding ItemSelectedCommand, Source={x:RelativeSource AncestorType={x:Type local:SettingsList}}}"
+                BindingContext="{Binding Source={x:RelativeSource AncestorType={x:Type local:SettingsList}}}"
+                ItemsSource="{Binding ItemsSource}"
+                ItemTemplate="{Binding ItemTemplate}"
+                ItemSelectedCommand="{Binding ItemSelectedCommand}"
+                SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
                 VerticalOptions="FillAndExpand" />
 
             <!-- Spacer -->

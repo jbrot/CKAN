@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Threading.Tasks;
 using Autofac;
 using Xamarin.Forms;
 
@@ -61,6 +63,17 @@ namespace CKAN.Xamarin.ViewModel
         /// </summary>
         public ILifetimeScope Scope { get; }
 
+        /// <summary>
+        /// The current ModalViewModel being displayed by this view model. You
+        /// can test if this is null to determine if we are in a modal view.
+        /// </summary>
+        public ModalViewModel CurrentModal {
+            get => currentModal;
+            private set => SetProperty(ref currentModal, value);
+        }
+        private ModalViewModel currentModal;
+        private SemaphoreSlim ModalSemaphore = new SemaphoreSlim(1);
+
         public BaseViewModel (ILifetimeScope scope)
         {
             Scope = scope;
@@ -76,6 +89,34 @@ namespace CKAN.Xamarin.ViewModel
             field = value;
             OnPropertyChanged(name);
             return true;
+        }
+
+        /// <summary>
+        /// Run the provided modal view. Note that typically you will create
+        /// modal views in their own LifetimeScope. NOTE: This must be called
+        /// from the main thread.
+        /// </summary>
+        /// 
+        /// <example>
+        /// <code>
+        /// ILifetimeScope scope = Scope.BeginLifetimeScope();
+        /// MyModalViewModel vm = scope.Resolve&lt;MyModalViewModel&gt;();
+        /// var res = await RunModal(vm);
+        /// </code>
+        /// </example>
+        protected async Task<T> RunModal<T>(ModalViewModel<T> modalView)
+        {
+            // We can only display one Modal at a time.
+            await ModalSemaphore.WaitAsync();
+
+            CurrentModal = modalView;
+            T res = await modalView.Task;
+            CurrentModal = null;
+
+            // Let the next Modal start
+            ModalSemaphore.Release();
+
+            return res;
         }
     }
 }

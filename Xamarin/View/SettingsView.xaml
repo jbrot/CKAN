@@ -11,7 +11,9 @@
             <BoxView HeightRequest="35" Color="Transparent" />
 
             <Label Text="KSP Locations" FontSize="25" TextColor="Gray" />
-            <local:SettingsList ItemsSource="{Binding KspInstances}" x:Name="slist">
+            <local:SettingsList ItemsSource="{Binding KspInstances}"
+                                SelectedItem="{Binding SelectedKspInstance, Mode=OneWayToSource}"
+                                x:Name="slist">
                 <local:SettingsList.Header>
                     <Grid Padding="10, 3">
                         <Grid.ColumnDefinitions>
@@ -52,13 +54,13 @@
                         <Button Text="+" Command="{Binding ViewModel.NewKspInstance}"/>
                         <!-- WARNING: Binding Command overwrites IsEnabled, so we /must/ set IsEnabled after Command! -->
                         <Button Text="-" Command="{Binding ViewModel.DeleteKspInstance}"
-                                IsEnabled="{Binding SList.List.SelectedItem, Converter={x:StaticResource notNull}}" />
+                                IsEnabled="{Binding SList.SelectedItem, Converter={x:StaticResource notNull}}" />
                         <Button Text="Edit" Command="{Binding ViewModel.EditKspInstance}"
-                                IsEnabled="{Binding SList.List.SelectedItem, Converter={x:StaticResource notNull}}" />
+                                IsEnabled="{Binding SList.SelectedItem, Converter={x:StaticResource notNull}}" />
                         <Button Text="Make Active" Command="{Binding ViewModel.ActivateKspInstance}"
-                                IsEnabled="{Binding SList.List.SelectedItem.Active, Converter={x:StaticResource negate}, FallbackValue=False}" />
+                                IsEnabled="{Binding SList.SelectedItem.Active, Converter={x:StaticResource negate}, FallbackValue=False}" />
                         <Button Text="Make Default" Command="{Binding ViewModel.MakeDefaultKspInstance}"
-                                IsEnabled="{Binding SList.List.SelectedItem.AutoStart, Converter={x:StaticResource negate}, FallbackValue=False}" />
+                                IsEnabled="{Binding SList.SelectedItem.AutoStart, Converter={x:StaticResource negate}, FallbackValue=False}" />
                     </StackLayout>
                 </local:SettingsList.Footer>
             </local:SettingsList>

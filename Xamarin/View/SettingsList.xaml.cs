@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Windows.Input;
+using CKAN.Xamarin.ViewModel;
 using Xamarin.Forms;
 using XView = Xamarin.Forms.View;
 
@@ -31,20 +32,23 @@ namespace CKAN.Xamarin.View
         }
         public static BindableProperty ItemSelectedCommandProperty = BindableProperty.Create(nameof(ItemSelectedCommand), typeof(ICommand), typeof(SettingsList));
 
+        public ISelectableListItemViewModel SelectedItem {
+            get { return (ISelectableListItemViewModel) GetValue(SelectedItemProperty); }
+            set { SetValue(SelectedItemProperty, value); }
+        }
+        public static BindableProperty SelectedItemProperty = BindableProperty.Create(nameof(SelectedItem), typeof(ISelectableListItemViewModel), typeof(SettingsList));
+
         public XView Header {
             get { return (XView)GetValue(HeaderProperty); }
             set { SetValue(HeaderProperty, value); }
         }
         public static BindableProperty HeaderProperty = BindableProperty.Create(nameof(Header), typeof(XView), typeof(SettingsList));
 
-
         public XView Footer {
             get { return (XView)GetValue(FooterProperty); }
             set { SetValue(FooterProperty, value); }
         }
         public static BindableProperty FooterProperty = BindableProperty.Create(nameof(Footer), typeof(XView), typeof(SettingsList));
-
-        public SelectableListView List { get => list; }
 
         public SettingsList ()
         {

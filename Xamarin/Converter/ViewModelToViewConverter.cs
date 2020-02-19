@@ -16,6 +16,10 @@ namespace CKAN.Xamarin.Converter
     {
         public object Convert (object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value == null) {
+                return null;
+            }
+
             if (value is BaseViewModel bvm) {
                 return bvm.Scope.Resolve(typeof(IMvvmView<>).MakeGenericType(bvm.GetType()));
             }

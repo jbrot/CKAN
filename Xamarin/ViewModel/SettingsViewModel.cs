@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Autofac;
 using CKAN.Xamarin.Model;
@@ -16,6 +17,7 @@ namespace CKAN.Xamarin.ViewModel
         private CkanService CkanService;
 
         public IList<KspListItemViewModel> KspInstances { get; } = new ObservableCollection<KspListItemViewModel>();
+        public KspListItemViewModel SelectedKspInstance { get; set; }
         public ICommand NewKspInstance { get; private set; }
         public ICommand DeleteKspInstance { get; private set; }
         public ICommand EditKspInstance { get; private set; }
@@ -36,7 +38,7 @@ namespace CKAN.Xamarin.ViewModel
                 UpdateKspInstances();
             }
 
-            NewKspInstance = new Command(OnNewKspInstance);
+            NewKspInstance = new Command(async() => await OnNewKspInstance());
             DeleteKspInstance = new Command(OnDeleteKspInstance);
             EditKspInstance = new Command(OnEditKspInstance);
             ActivateKspInstance = new Command(OnActivateKspInstance);
@@ -74,10 +76,18 @@ namespace CKAN.Xamarin.ViewModel
             }
         }
 
-        private void OnNewKspInstance() { }
+        private async Task OnNewKspInstance() {
+            ILifetimeScope scope = Scope.BeginLifetimeScope();
+            KspInstanceEditorViewModel vm = scope.Resolve<KspInstanceEditorViewModel>();
+            bool res = await RunModal(vm);
+        }
+
         private void OnDeleteKspInstance() { }
+
         private void OnEditKspInstance() { }
+
         private void OnActivateKspInstance() { }
+
         private void OnMakeDefaultKspInstance() { }
 
         private void OnServicePropertyChanged (object sender, PropertyChangedEventArgs e)
