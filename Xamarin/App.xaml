@@ -14,5 +14,8 @@
         <cvrt:BoolToIndicatorConverter x:Key="boolToIndicator" />
         <cvrt:NegationConverter x:Key="negate" />
         <cvrt:NotNullConverter x:Key="notNull" />
+        <cvrt:StatusIndicatorConverter x:Key="statusIndicator" />
+        <cvrt:StatusIndicatorImageConverter x:Key="statusIndicatorImage" />
+        <cvrt:StatusIndicatorMarginConverter x:Key="statusIndicatorMargin" />
     </Application.Resources>
 </Application>

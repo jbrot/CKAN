@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CKAN.Xamarin.View.StatusIndicator"
+             WidthRequest="25"
+             HeightRequest="25"
+             x:Name="this">
+    <AbsoluteLayout BindingContext="{x:Reference this}">
+        <ActivityIndicator IsRunning="True"
+                           AbsoluteLayout.LayoutBounds="0,0,1,1"
+                           AbsoluteLayout.LayoutFlags="All"
+                           IsVisible="{Binding CurrentStatus, Converter={x:StaticResource statusIndicator}, ConverterParameter=false}" />
+        <Image Source="{Binding CurrentStatus, Converter={x:StaticResource statusIndicatorImage}}"
+               Margin="{Binding CurrentStatus, Converter={x:StaticResource statusIndicatorMargin}}"
+               AbsoluteLayout.LayoutBounds="0,0,1,1"
+               AbsoluteLayout.LayoutFlags="All"
+               IsVisible="{Binding CurrentStatus, Converter={x:StaticResource statusIndicator}, ConverterParameter=true}" />
+    </AbsoluteLayout>
+</ContentView>

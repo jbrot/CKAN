@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:CKAN.Xamarin.View"
              x:Class="CKAN.Xamarin.View.KspInstanceEditorView">
     <Frame BackgroundColor="White" CornerRadius="10" Padding="20" WidthRequest="360">
         <StackLayout>
@@ -11,7 +12,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="30" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -24,9 +25,10 @@
                        WidthRequest="200"
                        Grid.Row="0"
                        Grid.Column="1" />
-                <ActivityIndicator IsRunning="False"
-                                   Grid.Row="0"
-                                   Grid.Column="2" />
+                <local:StatusIndicator CurrentStatus="{Binding NameStatus}"
+                                       Message="{Binding NameMessage}"
+                                       Grid.Row="0"
+                                       Grid.Column="2" />
                 <Label Text="Path:"
                        Grid.Row="1"
                        Grid.Column="0" />
@@ -39,9 +41,10 @@
                         <TapGestureRecognizer Command="{Binding EditPathCommand}" />
                     </Entry.GestureRecognizers>
                 </Entry>
-                <ActivityIndicator IsRunning="True"
-                                   Grid.Row="1"
-                                   Grid.Column="2" />
+                <local:StatusIndicator CurrentStatus="{Binding PathStatus}"
+                                       Message="{Binding PathMessage}"
+                                       Grid.Row="1"
+                                       Grid.Column="2" />
             </Grid>
             <BoxView HeightRequest="10" Color="Transparent" />
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="15">

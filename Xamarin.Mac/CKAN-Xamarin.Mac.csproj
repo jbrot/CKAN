@@ -81,6 +81,10 @@
     <ImageAsset Include="Assets.xcassets\Logo.imageset\Contents.json" />
     <ImageAsset Include="Assets.xcassets\Logo.imageset\ckan-256.png" />
     <ImageAsset Include="Assets.xcassets\Logo.imageset\ckan-128.png" />
+    <ImageAsset Include="Assets.xcassets\X.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\Check.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\X.imageset\x-1.pdf" />
+    <ImageAsset Include="Assets.xcassets\Check.imageset\check-1.pdf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -90,6 +94,7 @@
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Service\FileService.cs" />
+    <Compile Include="Renderer\StatusIndicatorRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xamarin\CKAN-Xamarin.csproj">
@@ -124,6 +129,9 @@
   <ItemGroup>
     <Folder Include="Assets.xcassets\Logo.imageset\" />
     <Folder Include="Service\" />
+    <Folder Include="Assets.xcassets\X.imageset\" />
+    <Folder Include="Assets.xcassets\Check.imageset\" />
+    <Folder Include="Renderer\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
   <Import Project="..\_build\lib\nuget\Xamarin.Forms.4.1.0.618606\build\Xamarin.Forms.targets" Condition="Exists('..\_build\lib\nuget\Xamarin.Forms.4.1.0.618606\build\Xamarin.Forms.targets')" />
