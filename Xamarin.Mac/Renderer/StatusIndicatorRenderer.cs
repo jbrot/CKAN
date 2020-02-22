@@ -13,8 +13,26 @@ namespace CKAN.Xamarin.Mac.Renderer
         {
             base.OnElementChanged(e);
 
-            StatusIndicator si = (StatusIndicator)e.NewElement;
-            if (si?.CurrentStatus == Status.Invalid) {
+            if (e.NewElement != null) {
+                e.NewElement.PropertyChanged += OnPropertyChanged;
+                UpdateToolTip((StatusIndicator)e.NewElement);
+            }
+
+            if (e.OldElement != null) {
+                e.OldElement.PropertyChanged -= OnPropertyChanged;
+            }
+        }
+
+        private void OnPropertyChanged (object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(StatusIndicator.Message)) {
+                UpdateToolTip((StatusIndicator)sender);
+            }
+        }
+
+        private void UpdateToolTip(StatusIndicator si)
+        {
+            if (si.CurrentStatus == Status.Invalid) {
                 ToolTip = si.Message;
             } else {
                 ToolTip = null;
