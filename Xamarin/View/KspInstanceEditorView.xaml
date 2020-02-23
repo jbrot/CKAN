@@ -48,7 +48,7 @@
             </Grid>
             <BoxView HeightRequest="10" Color="Transparent" />
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="15">
-                <Button Text="Cancel" Command="{Binding CompleteCommand}" />
+                <Button Text="Cancel" Command="{Binding CancelCommand}" />
                 <Button Text="Accept" Command="{Binding CompleteCommand}" IsEnabled="{Binding IsValid}" />
             </StackLayout>
         </StackLayout>

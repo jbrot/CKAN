@@ -11,7 +11,12 @@ using TTask = System.Threading.Tasks.Task;
 
 namespace CKAN.Xamarin.ViewModel
 {
-    public class KspInstanceEditorViewModel : ModalViewModel<KSP>
+    /// <summary>
+    /// Manages a modal UI that allows the user to specify the name and path of a KSP instance. This class
+    /// will validate user input, and will never return an invalid KspInstanceSpec. It may return null if
+    /// the user cancels, though.
+    /// </summary>
+    public class KspInstanceEditorViewModel : ModalViewModel<KspInstanceEditorViewModel.KspInstanceSpec?>
     {
         private static string MISSING_PATH = "You must provide a path.";
         private static string INVALID_PATH = "The given path is not a KSP instance.";
@@ -19,7 +24,17 @@ namespace CKAN.Xamarin.ViewModel
         private static string MISSING_NAME = "You must provide a name.";
         private static string TAKEN_NAME = "There is already an instance with this name.";
 
+        /// <summary>
+        /// The needed information to construct a CKAN.KSP instance.
+        /// </summary>
+        public struct KspInstanceSpec
+        {
+            public string Name { get; set; }
+            public string Path { get; set; }
+        }
+
         public ICommand CompleteCommand { get; private set; }
+        public ICommand CancelCommand { get; private set; }
         public ICommand EditPathCommand { get; private set; }
 
         public bool IsValid {
@@ -160,6 +175,7 @@ namespace CKAN.Xamarin.ViewModel
             FileService = fileService;
 
             CompleteCommand = new Command(OnComplete);
+            CancelCommand = new Command(OnCancel);
             EditPathCommand = new Command(EditPath);
 
             Instance = inst;
@@ -174,7 +190,15 @@ namespace CKAN.Xamarin.ViewModel
 
         private void OnComplete()
         {
-            Complete(Instance);
+            Complete(new KspInstanceSpec {
+                Name = Name,
+                Path = Path
+            });
+        }
+
+        private void OnCancel()
+        {
+            Complete(null);
         }
 
         private void EditPath()
